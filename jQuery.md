@@ -70,13 +70,40 @@ Place element before of after p
 Remove #element form the DOM
 
 
-## Classes manipulation
+## Classes/CSS manipulation
 
 **$("#element").addClass('classe')**  
 Add a class to the element
 
 **$("#element").removeClass('classe')**  
 Remove an element's class
+
+**$('#element').toggleClass('class')**  
+Toggle an element's class
+
+**$('#element').hasClass('class')**  
+Return true if element has the specified class
+
+**$("element").css('background-color', '#ff6600')**  
+Change the element's backgroud-color css property
+
+**$("element").css({'background-color': '#ff6600'})**  
+Change the element's backgroud-color css property using an object
+
+
+## Animate
+
+**$("element").animate({'top': '-10px'}, speed)**
+Same as CSS but animate the change
+speed: optional animation duration in millisecond (default: 400, slow: 200, fast: 400)
+
+**$("element").show() / .hide() / .toggle()**  
+Show / hide / toggle element
+
+**$("element").slideDown() / .slideUp() / .slideToggle()**   Show / hide / toggle element with a slide effect
+
+**$("element").fadeIn() / .fadeOut() / .fadeOut()**  
+Show / hide / toggle element with a fade effect
 
 
 ## Events
@@ -109,13 +136,25 @@ Prevent the event's default behavior to be triggered
 * select/change
 * submit
 
-##  Animations
 
-**$("element").show() / .hide() / .toggle()**  
-Show / hide / toggle element
 
-**$("element").slideDown() / .slideUp() / .slideToggle()**  
-Show / hide / toggle element with a slide effect
 
-**$("element").fadeIn() / .fadeOut() / .fadeOut()**  
-Show / hide / toggle element with a fade effect
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+End of file
