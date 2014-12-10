@@ -3,121 +3,128 @@ jQuery
 
 ## CSS-like selector
 
-**$("selector")**  
+### $("selector")
 Select an element according to a css selector (element name, #id, .class, etc.)
 
-**$("selector children")**  
+### $("selector children")
 Select a children element
 
-**$("selector > children")**  
+### $("selector > children")
 Select a direct descendant
 
-**$("selector, selector")**  
+### $("selector, selector")
 Select multiple elements with different rules
 
-**$("selector:first, selector:last")**  
+### $("selector:first, selector:last")
 Select the first and last corresponding elements
 
-**$("selector:odd, selector:event")**  
+### $("selector:odd, selector:event")
 Select odd or even elements (first is 0, so even)
 
 
 ## Methods selectors (faster)
 
-**$("ul").find("li")**  
+### $("ul").find("li")
 Select all li children elements in ul element
 
-**$("selector").first() / .last()**  
+### $("selector").first() / .last()
 Select the first / last corresponding element
 
-**$("element").prev() / .next()**  
+### $("element").prev() / .next()
 Select the previous / next element
 
-**$("element").parent()**  
+### $("element").parent()
 Select the direct ancester element
 
-**$("ul").children("li")**  
+### $("ul").children("li")
 Select only direct li descendants of ul (unlike **.find()**)
 
-**$("element").parents("li")**  
+### $("element").parents("li")
 Select all ancesters elements to li
 
-**$("element").closest("li")**  
+### $("element").closest("li")
 Select the closest ancester element to li
 
-**$(".class1").filter(".class2")**  
+### $(".class1").filter(".class2")
 Select all classes that have .class1, then filter to keep only those who have also .class2
 
 
 ## DOM manipulation
 
-**var element = $("&lt;li&gt;item&lt;/li&gt;")**  
+### var element = $("&lt;li&gt;item&lt;/li&gt;")
 Create a new HTML element in the DOM
 
-**$("ul").prepend(element) / .append(element)**  
+### $("ul").prepend(element) / .append(element)
 Place element as first / last children of ul
 
-**$("p").after(element) / .before(element)**  
+### $("p").after(element) / .before(element)
 Place element before of after p
 
-**element.prependTo($("ul")) / .appendTo($("ul"))**  
+### element.prependTo($("ul")) / .appendTo($("ul"))
 Place element as first / last children of ul
 
-**element.insertAfter($("p")) / .insertBefore($("p"))**  
+### element.insertAfter($("p")) / .insertBefore($("p"))
 Place element before of after p
 
-**$("#element").remove()**  
+### $("element").remove()
 Remove #element form the DOM
+
+### $("element").attr('attr') / .attr('attr', 'val')
+Set / get element's attribute attr with value val
+
+### $("element").data('key') / .data('key', 'val')
+Set / get element's data-key attribute with value val
 
 
 ## Classes/CSS manipulation
 
-**$("#element").addClass('classe')**  
+### $("element").addClass('classe')
 Add a class to the element
 
-**$("#element").removeClass('classe')**  
+### $("element").removeClass('classe')
 Remove an element's class
 
-**$('#element').toggleClass('class')**  
+### $('element').toggleClass('class')
 Toggle an element's class
 
-**$('#element').hasClass('class')**  
+### $('element').hasClass('class')
 Return true if element has the specified class
 
-**$("element").css('background-color', '#ff6600')**  
+### $("element").css('background-color', '####ff6600')
 Change the element's backgroud-color css property
 
-**$("element").css({'background-color': '#ff6600'})**  
+### $("element").css({'background-color': '####ff6600'})
 Change the element's backgroud-color css property using an object
 
 
 ## Animate
 
-**$("element").animate({'top': '-10px'}, speed)**
+### $("element").animate({'top': '-10px'}, speed)
 Same as CSS but animate the change
-speed: optional animation duration in millisecond (default: 400, slow: 200, fast: 400)
+* speed: optional animation duration in millisecond (default: 400, slow: 200, fast: 400)
 
-**$("element").show() / .hide() / .toggle()**  
+### $("element").show() / .hide() / .toggle()
 Show / hide / toggle element
 
-**$("element").slideDown() / .slideUp() / .slideToggle()**   Show / hide / toggle element with a slide effect
+### $("element").slideDown() / .slideUp() / .slideToggle() 
+Show / hide / toggle element with a slide effect
 
-**$("element").fadeIn() / .fadeOut() / .fadeOut()**  
+### $("element").fadeIn() / .fadeOut() / .fadeOut()
 Show / hide / toggle element with a fade effect
 
 
 ## Events
 
-**$("element").on('event', handler)**  
+### $("element").on('event', handler)
 Call handler function when event occures on element
 
-**$(".class").on('event', 'element', handler**  
-Call handler function when event occures on element if it is located in an .class element
+### $(".class").on('event', 'element', handler
+Call handler function when event occures on element if it is located in an .class element. Useful if inner element is loaded via AJAX after initial page load.
 
-**$(this)**  
+### $(this)
 Select the triggered element inside of the callback function
 
-**event.preventDefault()**  
+### event.preventDefault()
 Prevent the event's default behavior to be triggered
 
 ### Mouse events
@@ -137,6 +144,32 @@ Prevent the event's default behavior to be triggered
 * submit
 
 
+## Ajax
+
+### $.ajax('url', options)  
+
+Make an ajax request. *options* is a javascript object with the values:
+* **data**: a JS object for GET parameters
+* **success(response)**: called if the request was a success
+* **error(request, errorType, errorMessage)***: called if the request didn't succeeded
+* **timeout**: Time before timeout in millisecondes
+* **beforeSend()**: called before sending the request (useful for loading message)
+* **complete()**: called after the request, failed ou succesful (use ful for hiding loading message)
+* **context**: set the value of *this* inside callback functions
+* **type**: request method (POST or default GET)
+* **dataType**: 'json' parses the response as JSON
+* **contentType**: 'application/json' asks the server for JSON
+
+### $.get('url', success)
+
+Shorthand method for **.ajax()**
+* success(): a function called if the request was a success
+
+
+## Forms
+
+### $('form').serialize()
+Get all form fields and value as a JS object
 
 
 
