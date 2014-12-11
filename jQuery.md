@@ -75,6 +75,12 @@ Set / get element's attribute attr with value val
 ### $("element").data('key') / .data('key', 'val')
 Set / get element's data-key attribute with value val
 
+### $("element").html() / .html(value)
+Set / get element content
+* value can either be raw HTML code, a jQuery object or an array of jQuery object
+
+### $("element").detach()
+Temporarly remove an element from the DOM for quicker manipulation. Needs to be reinsereted into the DOM after
 
 ## Classes/CSS manipulation
 
@@ -147,7 +153,6 @@ Prevent the event's default behavior to be triggered
 ## Ajax
 
 ### $.ajax('url', options)  
-
 Make an ajax request. *options* is a javascript object with the values:
 * **data**: a JS object for GET parameters
 * **success(response)**: called if the request was a success
@@ -161,10 +166,12 @@ Make an ajax request. *options* is a javascript object with the values:
 * **contentType**: 'application/json' asks the server for JSON
 
 ### $.get('url', success)
-
-Shorthand method for **.ajax()**
+Shorthand method for **.ajax()** with type GET
 * success(): a function called if the request was a success
 
+### $.getJSON('url', success)
+Shorthand method for **.get()** with dataType json and contentType application/json
+* success(): a function called if the request was a success
 
 ## Forms
 
@@ -172,8 +179,13 @@ Shorthand method for **.ajax()**
 Get all form fields and value as a JS object
 
 
+## Utility methods
 
+### $.each(collection, function(index, object))
+Iterates on each item in the collection and send it as object in the callback function
 
+### $.map(collection, function(item, index))
+Returns a new array after having executed the function on each item in the collection
 
 
 
