@@ -79,8 +79,12 @@ Set / get element's data-key attribute with value val
 Set / get element content
 * value can either be raw HTML code, a jQuery object or an array of jQuery object
 
+### $("element").empty()
+Remove all HTML inside *element*
+
 ### $("element").detach()
 Temporarly remove an element from the DOM for quicker manipulation. Needs to be reinsereted into the DOM after
+
 
 ## Classes/CSS manipulation
 
@@ -121,11 +125,22 @@ Show / hide / toggle element with a fade effect
 
 ## Events
 
-### $("element").on('event', handler)
-Call handler function when event occures on element
+### $("element").on('event.ns', handler)
+Call *handler* function when *event* occures on *element*
+* event : the event listened to (among events listed above)
+* .ns : the namespace for this event (useful for **.off()** and **.trigger()**)
 
-### $(".class").on('event', 'element', handler
-Call handler function when event occures on element if it is located in an .class element. Useful if inner element is loaded via AJAX after initial page load.
+### $(".class").on('event.ns', 'element', handler
+Call handler function when event occures on *element* if it is located in an *.class* element. Useful if inner element is loaded via AJAX after initial page load.
+
+### $("element").off("event.ns")
+Deactivate the *event* event with namespace *ns* for *element*
+* .ns : the namespace of the event, given by **.on("event.ns")**
+* .off('click') : remove all click event for this element
+* .off('.ns') : remove all event with namespace ns for this element
+
+### $("element").trigger("event.ns")
+Trigger *event* on *element* as if it really occured. Can be used to create custom events with custom events name, that will be caught by **.on()**
 
 ### $(this)
 Select the triggered element inside of the callback function
@@ -187,7 +202,14 @@ Iterates on each item in the collection and send it as object in the callback fu
 ### $.map(collection, function(item, index))
 Returns a new array after having executed the function on each item in the collection
 
+### $(".class").each( function() { ... } )
+Iterates on each element contained in the jQuery object (each element with *.class.* class and execute callback function on it.
 
+
+## Plugins
+
+### $.fn.plugin = function() {}
+Create a plugin named *plugin()* that can be used on a 
 
 
 
