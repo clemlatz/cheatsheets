@@ -215,6 +215,38 @@ Will combine one or more *objects* with the *target* object. If a key is already
 Create a plugin named *plugin()* that can be used on a jQuery element like *$("element").plugin()*. This in the callback function will refer to the element on which the plugin function was called.
 
 
+## Promises
+
+### var promise = $.ajax('url', data);
+A promise is the object returned by the $.ajax function
+
+### promise.done(function(result) { })
+* function : called when the ajax call is successful
+* result : the ajax request result
+
+### promise.resolve(result)
+Triggers the *done()* method with customized *result*
+
+### promise.fail(function(result))
+* function : called when the ajax call fails
+* result : the ajax request result
+
+### promise.reject()
+Triggers the *fail()* method with customized *result*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
