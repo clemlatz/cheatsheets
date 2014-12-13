@@ -119,7 +119,7 @@ Show / hide / toggle element
 ### $("element").slideDown() / .slideUp() / .slideToggle() 
 Show / hide / toggle element with a slide effect
 
-### $("element").fadeIn() / .fadeOut() / .fadeOut()
+### $("element").fadeIn() / .fadeOut() / .fadeToggle()
 Show / hide / toggle element with a fade effect
 
 
@@ -203,13 +203,16 @@ Iterates on each item in the collection and send it as object in the callback fu
 Returns a new array after having executed the function on each item in the collection
 
 ### $(".class").each( function() { ... } )
-Iterates on each element contained in the jQuery object (each element with *.class.* class and execute callback function on it.
+Iterates on each element contained in the jQuery object (each element with *.class.* class and execute callback function with this as the iterated element.
+
+### $.extend(target, object)
+Will combine one or more *objects* with the *target* object. If a key is already set in *target*, it will be replaced. Allow to easily defined and override default values.
 
 
 ## Plugins
 
 ### $.fn.plugin = function() {}
-Create a plugin named *plugin()* that can be used on a 
+Create a plugin named *plugin()* that can be used on a jQuery element like *$("element").plugin()*. This in the callback function will refer to the element on which the plugin function was called.
 
 
 
