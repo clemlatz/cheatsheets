@@ -117,4 +117,5 @@ Set global variable
 git config --global user.name "Clement Bourgoin"
 git config --global user.email "cb@nokto.net"
 git config --global alias.st status
+git config --global alias.co checkout
 git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'"
