@@ -94,6 +94,13 @@ Merge {branch} in the current branch
 ### git branch -d {branch}
 Delete branch {branch}
 
+## Tags
+
+### git tag
+Show all tags
+* -a {tag} : create a new tag named {tag}
+* -m "{message}" : add a message with the new tag
+
 ## Log
 
 ### git log / lg
