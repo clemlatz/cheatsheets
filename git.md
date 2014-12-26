@@ -46,8 +46,13 @@ Show an object (blob, tree, tags and commit)
 * HEAD^:{file} : Show {file} snapshot from last commit
 
 ### git rebase
-Reorganise commits before push
--i : interactive mode
+Replay commits
+* master : replay commits from master to current branch
+* -i : interactive mode
+
+### git revert {hash}
+Undo changes of {hash} commit and create a new commit
+* -n : do it without committing again
 
 ## Remote
 
@@ -74,8 +79,15 @@ Send local commits from {branch} to distant repository {remote}
 ### git stash save -u "{message}"
 Save the working directory in the stash without commiting with {message}
 
+## git stash list
+Show all stashes created
+
 ### git stash pop
 Get back the stashed working directory
+
+### git stash drop
+Remove the latest stash
+* stash@{x} Remove stash number x
 
 ## Branches
 
@@ -87,12 +99,17 @@ Show all existing branches
 ### git checkout {branch}
 Go to branch {branch}
 * -b : go to branch and create it if necessary
+* --theirs : when fixing pull conflict, keep remote files
+* --ours : when fixing pull conflict, keep local files
 
 ### git merge {branch}
 Merge {branch} in the current branch
 
 ### git branch -d {branch}
 Delete branch {branch}
+
+### git cherry-pick {commit}
+Get {commit} from another branch and replay it on current branch 
 
 ## Tags
 
@@ -125,4 +142,4 @@ git config --global user.name "Clement Bourgoin"
 git config --global user.email "cb@nokto.net"
 git config --global alias.st status
 git config --global alias.co checkout
-git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'"
+git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'" -10
