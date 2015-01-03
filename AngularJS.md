@@ -91,6 +91,14 @@ Toggles a class if expression is true
 
     <li ng-class="{ active:tab === 1 }">Tab 1</li>
 
+### ng-model
+Binds form element to variables
+
+    <input name="title" ng-model="article.title">
+    
+### ng-submit
+Binds submit event of a form to a method of the controller
+
 ## Filters
 
     {{ data|filter:options }}
