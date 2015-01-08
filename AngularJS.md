@@ -23,7 +23,7 @@ https://docs.angularjs.org/api
 
 ### Create a controller
 
-    app.controller('StoreController', function()) {
+    app.controller('StoreController', function() {
         this.products = [{
                 name: "Le Petit Prince",
                 price: 10,
@@ -35,8 +35,8 @@ https://docs.angularjs.org/api
                 canPurchase: false
             }
         
-        ]
-    });
+        ];
+    }); 
     
 ### Use the controller in the HTML
 
@@ -99,6 +99,37 @@ Binds form element to variables
 ### ng-submit
 Binds submit event of a form to a method of the controller
 
+### ng-include
+Includes a template
+
+	<div ng-include="'included.html'">
+
+### Custom element directives
+
+	<product-title></product-title>
+	
+	app.directive('productTitle', function() {
+		return {
+			restrict: 'E',
+			templateUrl: 'productTitle.html',
+			controller: function() {},
+			controllerAs: 'panels'
+		};
+	});
+
+### Custom attribute directives
+
+	<h3 product-title></h3>
+	
+	app.directive('productTitle', function() {
+		return {
+			restrict: 'A',
+			templateUrl: 'productTitle.html',
+			controller: function() {},
+			controllerAs: 'panels'
+		};
+	});
+
 ## Filters
 
     {{ data|filter:options }}
@@ -127,29 +158,28 @@ Sort items in an array by key or '-key' to descending order
     <p>{{ products|orderBy:'-price' }}
 
 
+## Services
 
+### Dependency injection
 
+    app.controller('SomeController', ['$serviceA', '$serviceB', function($serviceA, $serviceB) {
+        
+    }])
 
+### $http
+Fetches JSON data from a web service
 
+    $http({ method: 'GET', url: '/products.hson' });
+    $http.get('/products.json', { apiKey: 'myApiKey' });
 
+Returns a promise object with success() & error() functions
 
+    $http(...).success( function(data) {
+        
+    })
 
+## $log
+Logs messages to the JavascriptConsole
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-End of file
+## $filter
+Filters an array
