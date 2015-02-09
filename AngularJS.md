@@ -86,6 +86,9 @@ Executes an expression on click
     <li ng-click="tab = 2"></li>
     <li ng-click="tab = 3"></li>
 
+### ng-change
+Executes an expression on input value changes
+
 ### ng-class
 Toggles a class if expression is true
 

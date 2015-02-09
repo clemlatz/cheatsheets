@@ -116,6 +116,7 @@ Get {commit} from another branch and replay it on current branch
 ### git tag
 Show all tags
 * -a {tag} : create a new tag named {tag}
+* -a {tag} {commit} : tag a specific commit
 * -m "{message}" : add a message with the new tag
 * -d {tag} : remove a tag
 
