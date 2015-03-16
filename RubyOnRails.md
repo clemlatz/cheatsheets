@@ -39,16 +39,16 @@ Located in `app/models/book.rb` for the `books` table
         belongs_to :author
         validates_presences_of :title
     end
-    
+
     class Author < ActiveRecord::Base
         has_many :books
     end
-    
+
 ### Relationships
 
 * `book.author` will return the related entity
 * `author.books` will return all related entities
-    
+
 ### Validators
 
 * `validates_presence_of`: must not be blank
@@ -69,11 +69,11 @@ Located in `app/models/book.rb` for the `books` table
 
     b = Book.new
     t.save
-    
+
 Will return false
 
     b.errors.messages
-    
+
 Will return {title:["can't be blank"]}
 
 ### Create
@@ -123,7 +123,7 @@ returns only on entity where `author` = "Alice"
     e.title = "Hello there"
     e.author = "Alice"
     e.save
-    
+
 or
 
     e = Entity.find(3)
@@ -162,18 +162,18 @@ or
         class BooksController < ApplicationController
             before_action: :get_book, only: [:edit, :update, :destroy]
             before_action: :check_auth, only: [:edit, :update, :destroy]
-            
+
             def get_tweet
                 @book = Book.find(params[:id])
             end
-            
+
             def check_auth
                 if session[:user_id] != @book.author_id
                     flash[:notice] = "Sorry, you can't edit this book"
                     redirect_to(tweet_path)
                 end
             end
-            
+
             def index
                 if params[:theme]
                     @books = Book.where(theme: params[:theme])
@@ -188,7 +188,7 @@ or
                     format.xml { render xml: @books }
                 end
             end
-        
+
             def show
                 @book = Book.find(params[:id])
                 respond_to do |format|
@@ -197,7 +197,7 @@ or
                 end
                 # no need to use `respond do` if we only need to return html
             end
-        
+
             def edit
                 @book = Book.find(params[:id])
             end
@@ -268,5 +268,32 @@ Located in /config/routes.rb
         get '/all' => redirect('/books') # redirects '/all' to '/books'
         get '/theme/:theme' => 'books#index', as 'theme_books'
         get ':name' => 'books#index', as 'author_books' # must be at the bottom of the file
-        root to: "books#index" 
+        root to: "books#index"
     end
+
+## Mailer
+
+Guide : http://guides.rubyonrails.org/action_mailer_basics.html
+
+* `rails generate mailer UserMailer` generates a new Mailer class
+
+Defining the mailer class:
+
+  class BookMailer < ActionMailer::Base
+    default from: 'alerts@bookshop.com'
+    def available(user, book)
+      attachments["book.jpg"] = book.cover_file
+      mail(to: user.email, subject: '#{book.title} is available')
+    end
+  end
+
+Use in the controller
+
+  BookMailer.available.deliver
+
+## Asset pipeline
+
+* `<%= javascript_include_tag "application" %>` includes assets/applications.js file
+* `<%= stylesheet_link_tag "application", media: "all" %>` includes assets/application.css file
+* `<%= image_tag "rails.png" %>` includes assets/rails.png file
+* `asset_path(/assets/rails.png)` generates only the assets path (without the tag)
