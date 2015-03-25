@@ -193,10 +193,12 @@ or
                 @book = Book.find(params[:id])
                 respond_to do |format|
                     format.html # show.html.erb
-                    format.json { render json: @tweet }
+                    format.json { render json: @book.to_json(only: :title) }, status: :ok
                 end
                 # no need to use `respond do` if we only need to return html
             end
+
+            def
 
             def edit
                 @book = Book.find(params[:id])
@@ -269,6 +271,12 @@ Located in /config/routes.rb
         get '/theme/:theme' => 'books#index', as 'theme_books'
         get ':name' => 'books#index', as 'author_books' # must be at the bottom of the file
         root to: "books#index"
+
+        resources :authors do
+          resources :books # nested roots (/author/15/book/1)
+          get :profile, on: :member # /author/15/profile
+          post :search, on: :collection # POST /authors/search
+        end
     end
 
 ## Mailer
@@ -296,4 +304,24 @@ Use in the controller
 * `<%= javascript_include_tag "application" %>` includes assets/applications.js file
 * `<%= stylesheet_link_tag "application", media: "all" %>` includes assets/application.css file
 * `<%= image_tag "rails.png" %>` includes assets/rails.png file
-* `asset_path(/assets/rails.png)` generates only the assets path (without the tag)
+* `asset_path('rails.png')` generates only the assets path (without the tag)
+
+## AJAX
+
+### In the view
+
+  <% link_to 'delete', book, method: :delete, remote: true %>
+
+will generate:
+
+  <a href="/book/135" data-method="delete" data-remote="true" rel="nofollow">delete</a>
+
+### In the controller
+
+  respond_to do |format|
+    format.js
+  end
+
+## In the view (destroy.js.erb)
+
+  $('#<%= dom_id(@book) %>').fadeOut();
