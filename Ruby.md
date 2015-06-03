@@ -21,7 +21,7 @@ Ruby
 
 * `.length` returns the string length
 * `.reverse` returns the string reversed
-* `.upcase` / `.downcase` changes the string's case 
+* `.upcase` / `.downcase` changes the string's case
 
 * `.lines` splits a string by lines into an array
 * `.chars` splits a string by chars into an array
@@ -37,10 +37,14 @@ http://ruby-doc.org/core-2.2.0/String.html#method-i-delete
 
 * `.length` returns the number of elements in an array
 * `.max` returns the highest value in an array
+* `.max_by` returns the highest element according to one of its property
 * `.sort` returns a sorted array
+* `.sort_by` returns a array sorted according to one of it's element property
 * `.join` returns a string with joined elements
 
 * `array['foo'] = 'bar'` called on a string, will replace the first occurence of `foo` by `bar` in the string
+
+* `array << item` or `array.push(item)` add item to the array
 
 ## Hashes
 
@@ -56,14 +60,14 @@ http://ruby-doc.org/core-2.2.0/String.html#method-i-delete
 ## Blocks
 
     method { |value| ... }
-    
+
 <=>
-    
+
     method do |value|
         ...
     end
-    
-    
+
+
 ## Custom methods
 
 * `def method(args)` defines a new method
@@ -77,7 +81,7 @@ Defining a method with multiple optional unordered arguments:
         book.title = title
         book.author = options[:author]
         book.publisher = options[:publisher]
-    
+
     book("Le Petit Prince",
         author: "Antoine de Saint-Exupéry",
         publisher: "Gallimard"
@@ -91,7 +95,7 @@ Defining a method with multiple optional unordered arguments:
         end
         # return stuff
     end
-    
+
     begin
         method()
     rescue AuthorizationException
@@ -100,7 +104,7 @@ Defining a method with multiple optional unordered arguments:
 
 ## Import libraries
 
-`require 'library'` 
+`require 'library'`
 
 
 ## Expressions
@@ -134,7 +138,7 @@ Defining a method with multiple optional unordered arguments:
         "/books/" + author +"/"
     else
         "/books/"
-        
+
     author_link = case author_url
         when "web"
             "http://www.author.com"
@@ -153,7 +157,7 @@ Defining a method with multiple optional unordered arguments:
     def tweet(message, lat = nil, long = nil)
       ...
     end
-    
+
 ### Option hash
 
     def tweet(message, options = {})
@@ -165,8 +169,8 @@ Defining a method with multiple optional unordered arguments:
 
 ### Splat arguments
 
-    def mention(status, *names)
-    end
+    `def mention(status, *names)
+    end`
 
     mention("Hello world", "Riri", "Fifi", "Loulou")
 
@@ -177,7 +181,7 @@ Defining a method with multiple optional unordered arguments:
     class Tweet
         attr_accessor :status # Create getter et setter methods
         attr_reader :created_at # Create only getter
-    
+
         def initialize(status) # constructor
            self.status = status
            self.created_at = Time.new
@@ -187,7 +191,37 @@ Defining a method with multiple optional unordered arguments:
             "#{@status}\n#{@created_at}"
         end
 
+
+
     end
+
+### Inheritence
+
+  class Player
+    def initialize(name)
+      @name = name
+    end
+
+    def die(reason)
+      puts "#{@name} died because of #{reason}"
+    end
+  end
+
+  class Magician < Player
+    def initialize(name, magic_points)
+      @magic_points = magic_points
+      super(name) # Calls the method in an ancester class with the same name
+    end
+  end
+
+  # If super is called without arg, it passes to parent method current methods args
+
+  class Warrior < Player
+    def die(reason) # overring ancester class method
+      puts "#{@name} has gone to Walhalla because of #{reason}"
+    end
+  end
+
 
 ## Exceptions
 
