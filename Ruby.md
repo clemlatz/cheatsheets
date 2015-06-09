@@ -250,17 +250,38 @@ Defining a method with multiple optional unordered arguments:
   end
 
 
-## Exceptions
+## Modules
 
-    def get_tweets(list)
-        unless list.authorized?(@user)
-            raise AuthorizationException.new
+* `include` in a class, exposes module's methods as instance methods
+* `extend` in a class, exposes module's methods as class methods
+* `object.extend(module)` to expose module's to a single instance 
+
+    # image_utils.rb
+    module ImageUtils
+      def self.included(base) # hook called when module is include
+        base.extends(ClassMethods) # extends calling class with ClassMethods submodule
+      end
+      
+      def self.preview(image)
+      end
+      
+      def self.transfer(image, destination)
+      end
+      
+      module ClassMethods # will be included as class methods in self.included
+        def fetch_from_twitter(user)
         end
-        list.tweets
+      end
     end
 
-    begin
-        tweets = get_tweets(my_list)
-    rescue AuthorizationException
-        warn "You are not authorized to see that list"
-    end
+    # avatar.rb
+    require 'image_utils'
+    class Avatar
+      include ImageUtils
+    end  
+ 
+    # run.rb
+    image = user.image
+    image.preview # preview method with image object from ImageUtils module
+
+* `extend ActiveSupport::Concern` can help with complex module dependencies
