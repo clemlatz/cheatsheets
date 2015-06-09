@@ -27,7 +27,16 @@ Ruby
 * `.chars` splits a string by chars into an array
 * `.bytes` splits a string by bytes (?) into an array
 
-http://ruby-doc.org/core-2.2.0/String.html#method-i-delete
+http://ruby-doc.org/core-2.2.0/String.html
+
+ActiveSupport methods:
+* `.pluralize`
+* `.singularize`
+* `.camelize`
+* `.underscore`
+* `.titleize`
+* `.dasherize`
+* `.parameterize`
 
 ## Arrays
 
@@ -46,6 +55,11 @@ http://ruby-doc.org/core-2.2.0/String.html#method-i-delete
 
 * `array << item` or `array.push(item)` add item to the array
 
+ActiveSupport methods:
+* `.from(x)` returns all elements after the xth
+* `.to(x)` returns all element before the xth
+
+
 ## Hashes
 
 * `{}` defines an empty Hash
@@ -55,6 +69,19 @@ http://ruby-doc.org/core-2.2.0/String.html#method-i-delete
 
 * `.length` returns the number of keys in a hash
 * `.keys` returns all keys in a hash
+
+ActiveSupport methods:
+* `.diff(hash2)` returns the diff between hash and hash2
+* `.stringify_keys` returns the hash with the keys stringified
+* `.except(:key)` returns all hash elements except `:key`
+* `.assert_valid_keys(:key1, :key2)` throws an exception if hash contains other keys
+
+## Dates
+
+ActiveSupport methods:
+* `.advance(years: x, months: x, days: x)` returns a date in the future
+* `.tomorrow` returns the day after
+* `.yesterday` returns the day before
 
 
 ## Blocks
