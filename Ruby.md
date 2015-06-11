@@ -94,6 +94,14 @@ ActiveSupport methods:
         ...
     end
 
+### Custom blocks
+
+  def call_this_block_twice
+    yield "world" # execute whatever is in the block
+    yield "world"
+  end
+
+  call_this_block_twice { |name| puts "hello {#name}" } # puts will be executed twice
 
 ## Custom methods
 
@@ -254,20 +262,20 @@ Defining a method with multiple optional unordered arguments:
 
 * `include` in a class, exposes module's methods as instance methods
 * `extend` in a class, exposes module's methods as class methods
-* `object.extend(module)` to expose module's to a single instance 
+* `object.extend(module)` to expose module's to a single instance
 
     # image_utils.rb
     module ImageUtils
       def self.included(base) # hook called when module is include
         base.extends(ClassMethods) # extends calling class with ClassMethods submodule
       end
-      
+
       def self.preview(image)
       end
-      
+
       def self.transfer(image, destination)
       end
-      
+
       module ClassMethods # will be included as class methods in self.included
         def fetch_from_twitter(user)
         end
@@ -279,7 +287,7 @@ Defining a method with multiple optional unordered arguments:
     class Avatar
       include ImageUtils
     end  
- 
+
     # run.rb
     image = user.image
     image.preview # preview method with image object from ImageUtils module
