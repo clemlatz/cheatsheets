@@ -293,3 +293,54 @@ Defining a method with multiple optional unordered arguments:
     image.preview # preview method with image object from ImageUtils module
 
 * `extend ActiveSupport::Concern` can help with complex module dependencies
+
+
+## Test::Unit
+
+    require test/unit
+
+    class ClassTesting < Test::Unit::TestCase
+    
+      def test_if_true
+        assert true
+      end
+    
+    end
+    
+## ActiveSupport
+
+    class ZombieTest < ActiveSupport::TestCase
+      test "invalid without a name" test_invalid_without_a_name
+        z = Zombie.new
+        assert !z.valid?, "Name is not being validated"
+      end
+    end
+
+## Fixtures
+
+Examples loaded in the database on start, rolled back before each tests
+
+    # test/fixtures/books.yml
+    book1:
+      id: 1
+      title: "Foo"
+      author: "Bar"
+      
+    # test.rb
+    book = books(:book1)
+
+* ``
+
+### Assert methods
+
+* `assert`
+* `assert_not_nil`
+* `assert_equal`
+* `assert_match`
+
+### Rake
+
+* `rake db:test:prepare` checks for migrations & load schema
+* `rake test` or `rake` runs `db:test:prepare` & run all tests
+* `ruby -Itest test/unit/my_test.rb` runs an individual test
+* `ruby -Itest test/unit/my_test.rb` -n test_if_true runs an single test case
