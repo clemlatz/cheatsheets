@@ -299,15 +299,23 @@ Defining a method with multiple optional unordered arguments:
 
     require test/unit
 
-    class ClassTesting < Test::Unit::TestCase
+    class BookTest < Test::Unit::TestCase
     
-      def test_if_true
+      def setup #
+        @book = books(:spin)
+      end
+    
+      test "if true is true" do
         assert true
+      end
+      
+      test "if book is valid" do
+        assert @book.valid?, "book isn't valid"
       end
     
     end
     
-## ActiveSupport
+### ActiveSupport
 
     class ZombieTest < ActiveSupport::TestCase
       test "invalid without a name" test_invalid_without_a_name
@@ -316,7 +324,7 @@ Defining a method with multiple optional unordered arguments:
       end
     end
 
-## Fixtures
+### Fixtures
 
 Examples loaded in the database on start, rolled back before each tests
 
@@ -344,3 +352,20 @@ Examples loaded in the database on start, rolled back before each tests
 * `rake test` or `rake` runs `db:test:prepare` & run all tests
 * `ruby -Itest test/unit/my_test.rb` runs an individual test
 * `ruby -Itest test/unit/my_test.rb` -n test_if_true runs an single test case
+
+### Mocha: mocks & stubs
+
+Fake a method call (stub)
+
+    test "deleting cover should set status to invalid"
+      @book.cover.stubs(:remove)
+      @book.remove_cover
+      assert "invalid", @book.status
+    end
+
+Ensure that a method is called (mock)
+
+    test "remove_cover should call cover.remove"
+      @book.cover.expects(:remove)
+      @book.remove_cover
+    end
