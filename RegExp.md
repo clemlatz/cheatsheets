@@ -34,7 +34,9 @@ Square brackets create a character set aka character class
 
 ## Modifiers
 
-    /[a-z]+/i # will match any chars insensitively (upper- or lowercase)
+* `i` : case insensitive (upper- or lowercase)
+* `g` : match all occurences (instead of first one only)
+* `m` : multiline (anchors will match end and beginning of line instead of full string)
 
 ## Quantifiers
 
