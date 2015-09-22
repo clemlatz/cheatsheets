@@ -92,3 +92,10 @@ Square brackets create a character set aka character class
   /pirate\s(ship)?/ # will match "pirate ship" and (partially) "pirate boat"
 
 * Makes a character or character group optional
+
+## Capture groups
+
+  /(foot)/ will return foot
+
+* Expression between parenthesis will be returned
+* Groups beggining with ?: will not be captured
