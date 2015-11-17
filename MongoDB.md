@@ -25,6 +25,7 @@ db.recipes.insert(
     "score": 0,
     "ingredients": ["Chocolate", "Butter", "Sugar", "Secret"]
     "categories": ["yummy", "fat"],
+    "portions": ["2, 4, 8, 12"],
     "createdAt": new Date(2015, 8, 9), // 8th month is september
   }
 )
@@ -36,10 +37,12 @@ db.recipes.insert(
 ## Find
 
 * `db.recipes.find()` returns all recipes
-* `db.recipes.find({ name: "Chocolate cake" })` search by specific field
-* `db.recipes.find({ ingredients: "Chocolate" })` search by array value
-* `db.recipes.find({ "author.name": "Master Chief"})` search by subdocument
+* `db.recipes.find({ name: "Chocolate cake" })` searches by specific field
+* `db.recipes.find({ ingredients: "Chocolate" })` searches by array value
+* `db.recipes.find({ "author.name": "Master Chief" })` searches by subdocument
 value
+* `db.recipes.find({ name: "Chocolat cake", "author.name": "Master Chief" })`
+searches by multiple values
 
 * Queries are case sensitive
 
@@ -100,7 +103,26 @@ db.recipes.update(
 * `{"$pop": {"categories": -1}}` removes the last element in array
 * `{"$push": {"categories": "dessert"}}` adds an element to the array
 * `{"$addToSet": {"categories": "dessert"}}` adds to array unless already exists
-* `{"$pull": {"categories": "dessert"}}` removes all instances form the array 
+* `{"$pull": {"categories": "dessert"}}` removes all instances form the array
+
+### Comparison operators
+
+* `$gt`: greather than
+* `$lt`: lesser than
+* `$gte`: greater than or equal to
+* `$lte`: lesser than or equal to
+* `$ne`: not equal to (or array not containing)
+
+```
+db.recipes.find( {"score": { "$gt": 50, "$lt": 75 }} )
+```
+Returns recipes whose score are between 50 and 75
+
+```
+db.recipes.find( {"portions" { "$elemMatch": { "$gt": 5, "$lt": 9 } }} )
+```
+Returns recipes whose `portions` array contains at least one element matching
+at least one of the criteria
 
 ## Delete
 
