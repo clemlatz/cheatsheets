@@ -2,12 +2,13 @@ MongoDB
 =======
 
 
-## Shell commands
+## Mongo shell commands
 
 * `use {database}` selects a database
 * `db` shows the current database's name
 * `db.help()` shows a list of commands
 * `show dbs` shows a list of dbs
+* `it` show the next results if more than 20
 
 
 ## Inserting
@@ -46,54 +47,6 @@ searches by multiple values
 
 * Queries are case sensitive
 
-## Update
-
-```
-db.recipes.update(
-  {"name": "Chocolate cake"}, // query parameter
-  // update parameter
-  {
-    "$set": { "taste": "Very good" }, // updates a field
-    "$inc": { "score": 1 }, // increments a field value
-    "$unset": { "color": "" } // remove a field from the document
-    "$rename": { "score": "grades" } // rename a field
-  },
-  // options
-  {  
-    "multi": true // performs update on all matched document
-    "upsert": true // creates document if it doesn't exists
-  }
-)
-```
-
-* `{}` as query parameter updates all potions
-
-### Update value in array
-
-```
-db.recipes.update(
-  { "ingredients": "Secret" },
-  {
-    "$set": {
-      "ingredients.$": "Cinnamon" // Replace the "secret" ingredient
-    }
-  }
-)
-```
-
-### Update value in a embedded document
-
-```
-db.recipes.update(
-  { "name": "Chocolat cake" },
-  {
-    "$set": {
-      "author.name": "Clément" // Replace the "secret" ingredient
-    }
-  }
-)
-```
-
 ### Operators
 
 * `$max` updates if new value is greater than current or inserts if empty
@@ -123,6 +76,71 @@ db.recipes.find( {"portions" { "$elemMatch": { "$gt": 5, "$lt": 9 } }} )
 ```
 Returns recipes whose `portions` array contains at least one element matching
 at least one of the criteria
+
+* `{}` as query parameter updates all potions
+
+### Update value in array
+
+```
+db.recipes.update(
+  { "ingredients": "Secret" },
+  {
+    "$set": {
+      "ingredients.$": "Cinnamon" // Replace the "secret" ingredient
+    }
+  }
+)
+```
+
+### Projections
+
+Used to specify the exact fields we want to return
+
+* `.find({}, { "name": true, "author": true })` returns the `name`, `author`
+and `_id` fields
+* `.find({}, { "createdAt": false })` returns every fields except `createdAt`
+
+### Cursor methods
+
+* `.find().count()` returns the number for results
+* `.find().sort({ "price": 1 })` sorts the results in ascending order
+* `.find().sort({ "price": -1 })` sorts the results in descending order
+* `.find().limit(3)` returns the 3 first results
+* `.find().skip(3).limit(3)` returns the 3 nexts results
+
+
+## Update
+
+```
+db.recipes.update(
+  {"name": "Chocolate cake"}, // query parameter
+  // update parameter
+  {
+    "$set": { "taste": "Very good" }, // updates a field
+    "$inc": { "score": 1 }, // increments a field value
+    "$unset": { "color": "" } // remove a field from the document
+    "$rename": { "score": "grades" } // rename a field
+  },
+  // options
+  {  
+    "multi": true // performs update on all matched document
+    "upsert": true // creates document if it doesn't exists
+  }
+)
+```
+
+### Update value in a embedded document
+
+```
+db.recipes.update(
+  { "name": "Chocolat cake" },
+  {
+    "$set": {
+      "author.name": "Clément" // Replace the "secret" ingredient
+    }
+  }
+)
+```
 
 ## Delete
 
