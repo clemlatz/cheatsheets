@@ -11,6 +11,13 @@ MongoDB
 * `it` show the next results if more than 20
 
 
+## BSON
+
+Documents are persisted in a formated called BSON. Like JSON, it can store
+Strings, Numbers, Boolean, Array, Objects or Null value but also specific types
+like ObjectID() and ISODate()
+
+
 ## Inserting
 
 ```
@@ -142,6 +149,7 @@ db.recipes.update(
 )
 ```
 
+
 ## Delete
 
 `db.recipes.remove({ name: "Chocolate cake" })` to find and remove a document
@@ -149,8 +157,70 @@ db.recipes.update(
 * `.remove()` will remove all matching documents
 
 
-## BSON
+## Aggregation pipeline
 
-Documents are persisted in a formated called BSON. Like JSON, it can store
-Strings, Numbers, Boolean, Array, Objects or Null value but also specific types
-like ObjectID() and ISODate()
+`.aggregate(stage_op, stage_op, ...)` returns results filtered or grouped
+according to stage operator.
+
+Each stage_op will filter and documents before passing the results to the next
+stage operator.
+
+### Match stage operator
+
+`$match` works like a classic `find()` query
+
+```
+db.recipies.aggregate([{
+  "$match": {
+    "author.name": "Chef"
+  }
+}])
+```
+
+### Project stage operator
+
+`$project` filters fields returned for each documents
+
+`{"$project": { "_id": false }, { "vendor_id": true }}`
+
+### Group stage operator
+
+`$group` groups documents that have the same `group key`
+
+```
+db.recipes.aggregate([
+  { "$group": {
+    "_id": "$author_id", // group key (defines the group)
+    "count": {"$sum": 1}, // adds 1 of each matched document per group
+    "total_score": {"$sum": "$score"}, // sums all scores in each group
+    "average_score": {"$avg": "$score"}, // calculates average score for group
+  }}
+])
+```
+Will return results grouped by `author_id` in a field called `_id`
+
+* `$sum` adds the value for each element in group
+* `$avg` calculates the average value of all element in group
+* `$max` calculates the maximum value of all element in group
+* `$min` calculates the minimum value of all element in group
+
+### Sort stage operator
+
+* `$sort` sorts results by a field. Can be a field created earlier in a `$group`
+stage operator
+
+`{"$sort": {"average_score": -1}}`
+
+### Limit stage operator
+
+* `$limit` limits the number of returned results
+
+`{"$limit": 3}`
+
+
+## Resources
+
+* [MongoDB manual](https://docs.mongodb.org/manual/)
+* [Mongolab.org](http://mongolab.org/)
+* [MongoDB University](https://university.mongodb.com/)
+* [Pluralsight](https://www.pluralsight.com/search?q=mongodb&categories=all)
