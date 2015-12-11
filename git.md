@@ -124,11 +124,19 @@ Show all tags
 
 ### git log / lg
 Show log
-* --author=‘{author}’ : filter by author
-* --grep=‘{message}' : filter by commit message
-* -10 : show last 10 commits
-* origin/master..master : show commits that will be pushed
-* -- {file} : show commits affecting {file}
+* `--author=‘{author}’`: filter by author
+* `--grep=‘{message}'`: filter by commit message
+* `-10`: show last 10 commits
+* `origin/master..master`: show commits that will be pushed
+* `-- {file}`: show commits affecting {file}
+* `-S "{string}"`: show commits where modified lines match {string}
+* `-p`: display diff for each commit
+
+### `git blame {file}`
+Show a file with last modifying commit for each line
+
+### better git blame with git log
+* `git lg -S ".article-title" -p file.html`
 
 ## Config
 
