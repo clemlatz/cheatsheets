@@ -127,6 +127,9 @@ within an article.
 with a time and a time-zone offset. If not in those format, it should use the
 `datetime` attribute.
 
+
+### All together now
+
 ```html
 <nav>
   <ul>
@@ -156,4 +159,110 @@ with a time and a time-zone offset. If not in those format, it should use the
     </footer>
   </section>
 </main>
+```
+
+## HTML5 new inputs types
+
+HTML5 introduces new form element. If a browser doesn't support an input type,
+it defaults to text.
+
+### Search
+
+`<input type="search">` represents a one-line plain-text edit control for
+entering one or more search terms. It features round corner and a cancel button.
+On mobile, the keyboard default action button changes to "Search".
+
+### Email
+
+`<input type="email">` represents a one-line text for entering an e-mail adress.
+A virtual keyboard will feature easy access to "@" and "." keys.
+
+### URL
+
+`<input type="url">` represents a one-line text for entering an http URL.
+Anvirtual keyboard will feature easy access to "/", ".", or tld keys.
+
+### Date
+
+`<input type="date">` represents a one-line text for entering a string that
+represents a date. It will often feature a date picker so we can easily enter a
+date.
+
+Also:
+* `<input type="month">`
+* `<input type="week">`
+* `<input type="time">`
+* `<input type="datetime-local">`
+
+### Tel
+
+`<input type="tel">` represents a one-line text for entering a string that
+represents a phone number. Virtual keyboard will feature a phone keyboard.
+
+### Number
+
+`<input type="number">` represents a one-line precise control for entering a
+string that represents a number. Virtual keyboard will feature a number only
+keyboard.
+
+### Range
+
+`<input type="number">` represents a one-line imprecise control for entering a
+string that represents a number. It will be rendered as a draggable slider.
+
+### Color
+
+`<input type="number">` lets us set a string that represents a color and will
+be rendered as a color pickup.
+
+
+## HTML5 new form elements
+
+### Datalist
+
+```html
+<input type="text" list="browsers" />
+<datalist id="browsers">
+  <option value="Chrome">
+  <option value="Edge">
+  <option value="Firefox">
+  <option value="Safari">
+</datalist>
+```
+
+## HTML5 form attribute
+
+### Placeholder
+
+`placeholder` allow to specify a message shown before any text is entered.
+
+```html
+<input type="email" placeholder="Enter your email..." />
+```
+
+### Autofocus
+
+An input with the autofocus attribute will automatically get focus when the
+page is rendered.
+
+```html
+<input type="email" autofocus />
+```
+
+### Required
+
+An input with the required attribute will notify the user if he tries to submit
+the form with the field left blank.
+
+```html
+<input type="email" required />
+```
+
+### Pattern
+
+The pattern attribute accepts a Javascript regular expression that can be used
+to validate a form field to match the pattern.
+
+```html
+<input type="text" pattern="[0-9]{10}" />
 ```
