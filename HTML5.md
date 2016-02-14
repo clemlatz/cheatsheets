@@ -266,3 +266,136 @@ to validate a form field to match the pattern.
 ```html
 <input type="text" pattern="[0-9]{10}" />
 ```
+
+## CSS 3
+
+### border-radius property
+
+Applies rounded border to corners.
+
+`border-radius: <top left> <top right> <bottom left> <bottom right>`
+
+```css
+.box {
+  border-radius: 4px 15px 12px 10px;
+  border-radius: 50%;
+}
+```
+
+### box-shadow property
+
+Specifies a shadow on a element. Multiple shadows can be specified with a comma.
+
+`box-shadow: <inset> <offset-x> <offset-y> <blur-radius> <spread-radius> <color>`
+
+* `inset`: if the keyword is present, the shadow will be inside the element. If
+not (by default), the element will have a drop shadow.
+* `offset-x`: moves the shadow along the horizontal axis.
+* `offset-y`: moves the shadow along the vertical axis.
+* `blur-radius`: alters the blur amount of the shadow, causing it to become
+bigger and lighter with a bigger value.
+* `spread-radius`: causes the shadow to expand or shrink.
+* `color`: the color of the shadow.
+
+```css
+.box {
+  box-shadow: -1px 3px 2px #000, inset 3px 3px 1px #666;
+}
+```
+
+### text-shadow property
+
+Very similar to `box-shadow`, but applies the shadow to a text.
+
+`box-shadow: <offset-x> <offset-y> <blur-radius> <color>`
+
+### box-sizing property
+
+The `box-sizing` property is used to change the default CSS box model, which
+is used to calculate widths and heights of given elements.
+Each HTML element is a box, which consists of *margins*, *borders*,
+*padding* and the *content* of the element. The *box model* refers to how those
+properties are calculated in conjunction with one another in order to set the
+element's dimensions.
+* `content-box` (default): the width and height are measured by including only
+the content, but not the border, margin or padding.
+* `padding-box`: includes content and padding, but not border or margin.
+* `border-box`: includes content, padding and border, but not margin.
+
+### Multiple backgrounds
+
+CSS3 allows to apply multiple background, stacked in the order which they are
+specified (first on top).
+
+```css
+.element {
+  background-image: url(bg1.png), url(bg2.png);
+  background-position: top left, center right;
+  background-repeat: no-repeat, no-repeat;
+}
+```
+
+### Colors
+
+* `rgba()` represents the three additive primary colors (red, green, blue), plus
+a fourth value (alpha) for the opacity.
+* `hsla()` represents hue, saturation and lightness, plus a fourth value for the
+the opacity.
+
+```css
+.element {
+  background-color: rgba(255, 0, 0, .65);
+  color: hsla(240, 100%, 50%, .25);
+}
+```
+
+### Opacity
+
+Allows to specify the opacity of an element. It also affects the element nested
+inside.
+
+```css
+.element {
+  opacity: .45;
+}
+```
+
+### Linear gradients
+
+Allows to create smooth transitions between two or more colors. The are create
+by specifying starting point, ending point and optional stop-color points.
+
+`linear-gradient(<angle>, <color-stop>s)`
+
+* `angle` is generally in degrees (eg. `45deg`) or a keyword (`to top`: 0deg,
+`to bottom`: 180deg, `to right`: 270deg, `to left`: 90deg)
+* `color-stop` consists of a color and optional stop position, which can be
+either a percentage or a length
+
+```css
+.element {
+  background: linear-gradient(to bottom, red, yellow)
+}
+```
+
+### Radial gradient
+
+A `radial-gradient`, unlike `linear-gradient`, creates a gradient thats extends
+from an origin, the center of an element, extending outward in a circular or
+ellpitic shape.
+
+`radial-gradient(<shape> <size> at <position>, <color-stop>)`
+
+* `shape` can be `circle` or `ellipsis` (default)
+* `size` can be `closest-side`, `closest-corner`, `farthest-side`,
+`farthest-corner` (default) or a length or percentage
+* `position` default is `center` but all `background-position` values can be
+used here
+* `color-stop` consists of a color and optional stop position, which can be
+either a percentage or a length
+
+```css
+.element {
+  background: radial-gradient(aqua, blue);
+}
+```
