@@ -399,3 +399,111 @@ either a percentage or a length
   background: radial-gradient(aqua, blue);
 }
 ```
+
+## Fonts
+
+### Font-face
+
+`font-face` lets us use online fonts in a web page.
+
+```css
+@font-face {
+  font-family: 'OpenSansRegular';
+  src: url('OpenSansRegular-webfont.eot');
+  font-style: normal;
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'OpenSansRegular';
+  src: url('OpenSansBold-webfont.eot');
+  font-style: normal;
+  font-weight: bold;
+}
+
+p {
+  font-family: 'OpenSansRegular', Helvetica, sans-serif;
+}
+
+p.bold {
+  font-weight: bold; /* Will use OpenSansBold version */
+}
+```
+
+
+## Transform
+
+Allows to translate, rotate, scale and skew elements with CSS.
+
+```css
+.element {
+  transform: translate(20px, 30px),
+    rotate(45deg),
+    scale(1.2),
+    skewX(-2.5deg);
+}
+```
+
+### Translate
+
+`translate(<tx>, <ty>)`
+`translateX(<tx>)`
+`translateY(<ty>)`
+
+`<tx>` and `<ty>` can either be length or percentage
+
+### Rotate
+
+Rotates an element clockwise from its origin.
+
+`rotate(<angle>)`
+
+### Scale
+
+Scales an element by specify a unitless number.
+
+`scale(<sx>, <sy>)`
+`scaleX(<sx>)`
+`scaleT(<sy>)`
+
+If `<sy>` is not specified, it will default to the value of `<sx>`
+
+### Skew
+
+Skews an element around the x or y axys by the specified angle.
+
+`skewX(<ax>)`
+`skewY(<ay>)`
+
+
+## Transitions
+
+Allows to transition between two states of an element.
+
+`transition: <property> <duration> <timing-function> <delay>`
+
+* `property`: the CSS property affected by the transition (or `all`)
+* `duration`: the amount of time we want the transition to take place
+* `timing-function`: can either be `ease`, `ease-in`, `ease-in-out`,
+  `linear`, `cubic-bezier`, `step-start`, `step-end`, `steps()`
+* `delay`: the amount of time until the transition starts
+
+```css
+.element {
+  background-color: black;
+  transition: background-color .2s ease-in-out;
+  transition-property: background-color;
+  transition-duration: .2s;
+  transition-timing-function: ease;
+  transition-delay: .1s;
+}
+
+.element:hover {
+  background-color: blue;
+}
+```
+
+## Progressive enhancement
+
+The term refers to the use of newer features that add to the experience in
+modern browsers without detracting from the experience in older browsers.
