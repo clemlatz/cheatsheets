@@ -83,3 +83,66 @@ server.on('request', function(request, response) {
 server.on('close', closeCallback);
 server.listen(8080);
 ```
+
+## Streams
+
+Streams allows to process data piece by piece, or chunk by chunk. Most commons
+streams are readable (like the `request` object from the `http` module) and
+writable (like `response` or `process.stdout`) streams.
+
+The following example will process the request and stream a response back to
+the client before the request has even finished being send:
+
+```javascript
+http.createServer(function(request, response) {
+  response.writeHead(200);
+  request.on('readable', function() { // triggered when data is received
+    var chunk = null;
+    while (null !== (chunk = request.read())) {
+      console.log(chunk.toString()); // data from buffer may be binary
+      response.write(chunk); // no need to call toString();
+    }
+  })
+  request.on('end', function() { // when all data has been received
+    response.end();
+  });
+}).listen(8080);
+```
+
+This is called piping and can written in a single line using the `pipe` method:
+
+```javascript
+http.createServer(function(request, response) {
+  response.writeHead(200);
+  request.pipe(response);
+}).listen(8080);
+```
+
+Copy a file without loading it entirely in memory:
+
+```javascript
+var fs = require('fs'); // filesystem module
+var file = fs.createReadStream("readme.md");
+var newFile = fs.createWriteStream("readme_copy.md");
+file.pipe(newFile); // where the magic happens
+```
+
+Accept a file upload and stream back the progress:
+
+```javascript
+http.createServer(function(request, response) {
+  var newFile = fs.createWriteStream("readme_copy.md");
+  var fileBytes = request.headers['content-length']; // Get file size from request headers
+  var uploadedBytes = 0;
+
+  request.on('readable', function() { // triggered when data is received
+    var chunk = null;
+    while (null !== (chunk = request.read())) {
+      uploadedBytes += chunk.length; // get current chunk size
+      var progress = (uploadedBytes / fileBytes) * 100;
+      response.write("progress: " + parseInt(progress, 10) + "%\n");
+    }
+  })
+  request.pipe(newFile); // save uploaded file to disk as it is uploaded
+}).listen(8080);
+```
