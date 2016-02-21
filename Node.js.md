@@ -324,6 +324,8 @@ Socket.io helps building real-time web applications.
 
 * `npm install --save socket.io`
 
+### Basic chat application
+
 ```javascript
 var express = require('express');
 var app = express();
@@ -378,4 +380,113 @@ server.listen(8080);
     })
     
   </script>
+```
+
+
+## Persisting data
+
+## Memory
+
+In our chat example, messages could be stored in memory.
+
+```javascript
+var messages = [];
+var storeMessage = function(name, data) {
+  messages.push({ name: name, data: data });
+  if (messages.length > 10) {
+    messages.shift(); // Keep no more than 10 messages
+  }
+};
+
+// (...)
+
+// Store messages as they arrive
+client.on('messages', function(data) {
+  var message = client.name + ": "+ data;
+  client.broadcast.emit('messages', message); // Sending to all clients
+  client.emit('messages', message); // Sending back to sender
+  storeMessage(client.name, data);
+});
+
+// Replay saved messages when client joins
+client.on('join', function() {
+  messages.forEach(function(message) {
+    client.emit("messages", message.name + ": " + message.data);
+  });
+});
+```
+
+But they would disappear as soon as the server restarts.
+
+### Redis
+
+* `npm install --save redis`
+
+```javascript
+var redis = require('redis');
+var client = redis.createClient();
+
+// Set simple key value pair
+client.set("message1", "Hello, this is dog.");
+client.set("message2", "Hello, this is spider.");
+
+// Get value from key (async)
+client.get("message1", function(err, reply) {
+  console.log(reply); // => Hello, this is dog.
+});
+
+// Add a string to the messages list
+var message = "Hello, this is dog.";
+client.lpush("messages", message, function(err, reply) {
+  console.log(reply); // Optional callback that returns the list length
+  client.ltrim("messages", 0, 1); // Keep the first two strings only
+});
+
+// Get strings from the messages list
+// 0 to -1 means all in list
+client.lrange("messages", 0, -1, function(err, messages) {
+  console.log(messages);
+});
+```
+
+Our `storeMessage` function with redis:
+
+```javascript
+var redisClient = redis.createClient();
+var storeMessage = function(name, data) {
+  var message = JSON.stringify({ name: name, data: data });
+  redisClient.lpush("messages", message, function(err, response) {
+    redisClient.ltrim("messages", 0, 9); // Keep only last 10 messages
+  });
+};
+```
+
+And sending all messages on connection:
+
+```javascript
+client.on('join', function(name) {
+  redisClient.lrange("messages", 0, 1, function(err, messages) {
+    messages.reverse(); // so they're emitted in the corrected order
+    messages.forEach(function(message) {
+      message = JSON.parse(message);
+      client.emit("messages", message.name + ": " message.data);
+    });
+  });
+});
+```
+
+Users could be store as sets, a list of unique data.
+
+```javascript
+// Adding to set
+client.sadd("names", "Dog");
+client.sadd("names", "Spider");
+
+// Remove from set
+client.srem("names", "Spider");
+
+// Get all members in set
+client.smembers("names", function(err, names) {
+  console.log(names);
+});
 ```
