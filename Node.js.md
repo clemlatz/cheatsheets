@@ -235,8 +235,84 @@ package like its name, version and dependencies (and their version numbers).
 
 * `npm install` will look through `package.json` and install missing 
 dependencies to the `node_modules` directory
+* `npm install --save {package}` will install and add the dependency to the
+`package.json` file
 
 NPM uses semantic versionning: MAJOR.MINOR.PATCH
 * `"package": "~1"`: will fetch most recent version >= 1.0.0 & < 2.0.0
 * `"package": "~1.8"`: >= 1.8.0 & < 1.9.0
 * `"package": "~1.8.7"`: >= 1.8.8 & < 1.9.0
+
+
+## Express
+
+Node is very low-level. The `express` package is a web framework.
+
+* `npm install --save express`
+
+### Basic web page example
+
+```javascript
+var express = require('express');
+
+var app = express(); // creating an express app
+
+// Creating an endpoint for root route
+app.get('/', function(request, response) {
+  response.sendFile(__dirname + "/index.html"); // read and sends a file from current dir.
+});
+app.listen(8080); // Listen on port 8080
+```
+
+### A More complex example
+
+```javascript
+var app = require('express')();
+var request = require('request');
+var url = require('url');
+
+// Creating an dynamic route
+app.get('/tweets/:username', function(req, response) {
+  
+  // Get username from url params
+  var username = req.params.username; // Get param from url
+  
+  // Get tweets from Twitter API
+  var options = {
+    protocol: 'http:',
+    host: 'api.twitter.com',
+    pathname: '/1/statuses/user_timeline.json',
+    query: { screen_name: user, count: 10 }
+  }  
+  var twitterUrl = url.format(options);
+  
+  // Make the request and pipe the result to the response.
+  request(twitterUrl).pipe(response);
+});
+```
+
+### Templating
+
+* `npm install ejs`
+
+```javascript
+// app.js
+// ...require...
+app.get('/tweets/:username', function(req, response) {
+
+  // ...build API URL...
+
+  request(url, function(err, res, body) {
+    var tweets = JSON.parse(body);
+    response.locals = { tweets: tweets, name: username };
+    response.render('tweets.js');
+  });
+});
+```
+
+```html
+<h1>Tweets for @<%= name %></h1>
+<% tweets.forEach(function(tweet)) { %>
+  <li><%= tweet.text %></li>
+<% }); %>
+```
