@@ -146,3 +146,97 @@ http.createServer(function(request, response) {
   request.pipe(newFile); // save uploaded file to disk as it is uploaded
 }).listen(8080);
 ```
+
+
+## Modules
+
+When requiring a module with a `/`, Node will look in specific directories.
+
+* `require('./module')`: looks for module.js in the current directory
+* `require('../module')`: looks in the parent directory
+* `require('/absolute/path/to/dir')` will look the a specific directory
+
+When requiring with only the module name (`require('module')`), Node will look
+into the `node_modules` directory, then look for a `node_modules` in current
+current directory's parent, etc., until root directory.
+
+Each folder in the `node_modules` directory in considered a package.
+
+### Creating a module:
+
+```javascript
+// hello.js
+var hello = function() {
+  console.log("hello!");
+}
+module.exports = hello;
+
+// goodbye.js
+exports.goodbye = function() {
+  console.log("bye!");
+}
+```
+
+### Requiring modules:
+
+```javascript
+// app.js
+var http = require("http");
+var fs = require("fs");
+var hello = require("./hello"); // our custom module
+var gb = require("./goodbye");
+
+hello(); // Using our module
+gb.goodbye();
+```
+
+### Public/private methods in modules
+
+```javascript
+// module.js
+var foo = function() { /* /// */ };
+var bar = function() { /* /// */ };
+var baz = function() { /* /// */ }; // private method
+
+// public methods:
+exports.foo = foo;
+exports.bar = bar;
+
+// app.js
+var module = require('./module');
+
+module.foo();
+module.bar();
+module.baz(); // Nope
+```
+
+### NPM
+
+[NPM](http://npmjs.org) is the package manager for Node. It'a command-line 
+utility that comes with Node, uses a module repository, handles dependency 
+management.
+
+* `npm install {package}`: install a package
+* `npm install -g {package}`: globally install a package with executables
+* `npm search request`: search for a package
+
+The `package.json` files contains information about the an application or a
+package like its name, version and dependencies (and their version numbers).
+
+```javascript
+{
+  "name": "My Package",
+  "version": 1,
+  "dependencies": {
+    "connect": "1.8.7"
+  }
+}
+```
+
+* `npm install` will look through `package.json` and install missing 
+dependencies to the `node_modules` directory
+
+NPM uses semantic versionning: MAJOR.MINOR.PATCH
+* `"package": "~1"`: will fetch most recent version >= 1.0.0 & < 2.0.0
+* `"package": "~1.8"`: >= 1.8.0 & < 1.9.0
+* `"package": "~1.8.7"`: >= 1.8.8 & < 1.9.0
