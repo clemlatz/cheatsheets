@@ -316,3 +316,66 @@ app.get('/tweets/:username', function(req, response) {
   <li><%= tweet.text %></li>
 <% }); %>
 ```
+
+
+## Socket.io
+
+Socket.io helps building real-time web applications.
+
+* `npm install --save socket.io`
+
+```javascript
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+
+io.on('connection', function(client) {
+  console.log('Client connected!');
+  
+  // User joining
+  client.on('join', function(name) {
+    client.name = name;
+    console.log(name + " joined the chat.");
+  })
+  
+  // Receiving message from client
+  client.on('messages', function(data) {
+    var message = client.name + ": "+ data;
+    client.broadcast.emit('messages', message); // Sending to all clients
+    client.emit('messages', message); // Sending back to sender
+  });
+});
+
+app.get('/', function(req, res) {
+  res.sendFile(__dirname + '/index.html');
+});
+
+server.listen(8080);
+```
+
+```html
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var server = io.connect('http://localhost:8080');
+    
+    // When connected to server
+    server.on('connect', function() {
+      var nickname = prompt("What's your name?");
+      server.emit('join', nickname);
+    });
+    
+    // Receiving message from server
+    server.on('messages', function(data) {
+      insertMessage(data); // insert into the DOM
+    });
+    
+    // Sending message to server
+    $('#chat_form').on('submit', function() {
+      var message = $('#chat_input').val();
+      
+      server.emit('messages', message);
+    })
+    
+  </script>
+```
