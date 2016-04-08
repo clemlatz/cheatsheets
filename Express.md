@@ -66,19 +66,10 @@ response.redirect(301, '/new_url');
 
 When a request arrives, it will pass through the middleware stack before a response is sent.
 
-Add a middleware to the express stack:
-
-```js
-const middleware = function(request, response, next) {
-  next(); // will call the next middleware
-};
-
-app.use(middleware);
-```
 
 ### Static
 
-A middleware used to serve static files.
+The only middleware shipped with Express. Used to serve static files.
 
 Serve static file from the `/public` folder:
 
@@ -87,3 +78,19 @@ app.use(express.static('public'));
 ```
 
 Will serve by default an `index.html` file.
+
+
+### Create a middleware
+
+Add a middleware to the express stack:
+
+```js
+// middleware.js
+module.exports = function(request, response, next) {
+  next(); // will call the next middleware
+};
+
+// app.js
+const middleware = require('./middleware');
+app.use(middleware);
+```
