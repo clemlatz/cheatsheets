@@ -94,3 +94,66 @@ module.exports = function(request, response, next) {
 const middleware = require('./middleware');
 app.use(middleware);
 ```
+
+
+## User params
+
+### Query string parameters
+
+They are added to the `request.query` object.
+
+```javascript
+// GET /books?limit=10
+app.get('/books', function(request, response) {
+  if (request.query.limit >= 0) {
+    // return only 10 books
+  } else {
+    // return all the books
+  }
+});
+```
+
+### Dynamic routes
+
+With dynamic routes, placeholders can be used to name arguments part
+of the URL path, added to the `request.params` object.
+
+```javascript
+// GET /books/1234
+app.get('/books/:id', function(request, response) {
+  const book = Book.find(request.params.id);
+  if (!book) {
+    res.status(404).json('Book not found.');
+  } else {
+    response.json(book.title);       
+  }
+});
+```
+
+
+### Intercepting parameters
+
+Parameters can be intercepted before being handled by the controller by
+creating a `param` middleware.
+
+```javascript
+app.param('title', function(request, response, next) {
+  request.book = Book.findByTitle(request.params.title.toLowerCase());
+  if (request.book) {
+    next();    
+  } else {
+    res.status(404).json('Book not found.');
+  }
+});
+
+// GET /books/Lolita
+app.get('/books/:title', function(request, response) {
+  response.json(request.book.title);       
+});
+
+// GET /books/Lolita/authors
+app.get('/books/:title/authors', function(request, response) {
+  response.json(request.book.author);
+});
+
+```
