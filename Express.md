@@ -157,3 +157,24 @@ app.get('/books/:title/authors', function(request, response) {
 });
 
 ```
+
+
+## Body parser
+
+Body parser is a useful middleware that is not shipped with Express.
+
+```sh
+$  npm install body-parser --save
+```
+
+```javascript
+const express = require('express');
+const app = express();
+
+const bodyParser = require('body-parser');
+const parseUrlencoded = bodyParser.urlencoded({ extended: false }); // force the use of the native querystring Node library
+
+app.post('/books', parseUrlencoded, function(request, response) {
+  var newBook = request.body; // returns form data
+});
+```
