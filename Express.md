@@ -2,6 +2,8 @@
 
 A web application framework for Node
 
+[Documentation](http://expressjs.com/)
+
 ```sh
 $ npm install express --save
 ```
@@ -177,4 +179,54 @@ const parseUrlencoded = bodyParser.urlencoded({ extended: false }); // force the
 app.post('/books', parseUrlencoded, function(request, response) {
   var newBook = request.body; // returns form data
 });
+```
+
+
+## Refactoring routes
+
+### Creating route instances
+
+```javascript
+const express = require('express');
+const app = express();
+
+app.route('/books')
+  .get(function(request, response) {
+    //...
+  })
+  .post(parseUrlencoded, function(request, response) {
+    //...
+  });
+
+app.route('/books/:title')
+  .get(function(request, response) {
+    //...
+  })
+  .delete(function(request, response) {
+    //...
+  })
+
+```
+
+### Extracting routes to modules
+
+```javascript
+// /routes/books.js
+const express = require('express');
+const router = express.Router();
+
+router.route('/') // relative route to /books
+  .get(function(request, response)) { }
+  .post(parseUrlencoded, function(request, response)) { }
+router.route('/:name')
+  .all(function(request, response, next) {
+    // A middleware that will be used for all routes, e.g. for handling params
+  })
+  .get(function(request, response)) { }
+  .delete(function(request, response)) { }
+
+
+// /app.js
+const booksRoutes = require('/routes/books');
+app.use('/books', booksRoutes);
 ```
