@@ -6,7 +6,7 @@ large applications with data that changes over time.
 
 ## First component
 
-React uses a component-based architecture. A component generates HTML using
+React uses a component-based architecture. A **component** generates HTML using
 the `render()` method.
 
 The virtual DOM is an in-memory representation of real DOM elements generated
@@ -105,8 +105,71 @@ class BookshelfBox extends React.Component {
       Topics:
       <ul>
         {topicsList.map(topic => <li>{topic}</li>)}
-      </u>
+      </ul>
     </div> );
+  }
+}
+```
+
+
+## Props
+
+React components can take arguments, called **props**, passed as HTML
+attributes.
+
+```javascript
+class Bookshelf extends React.Component {
+
+  _getBooks() { // _ helps distinguish custom methods from React methods
+    const bookList = [ // usually obtained via xhr
+      { id: 1, author: "Thomas Ligotti", title: "Chants du cauchemar et de la nuit" },
+      { id: 2, author: "Lisa Tuttle", title: "Ainsi naissent les fantômes" }
+    ]
+
+    return bookList.map((book) => {
+      return (
+        <Book author={book.author} title={book.title} key={book.id} />
+      );
+    });
+  }
+
+  _getBookshelfTitle(booksCount) {
+    if (booksCount === 0) {
+      return 'Empty bookshelf';
+    } else if (booksCount === 1) {
+      return 'One book in bookshelf';
+    } else {
+      return `${booksCount} books in bookshelf`;
+    }
+  }
+
+  render() {
+    const books = this._getBooks();
+    return(
+    <div className="bookshelf">
+      <h3>{this._getBookshelfTitle(books.length)}</h3>
+      {comments} // JSX knows how to render an array
+    </div> );
+  }
+}
+```
+
+The `key` prop is a special prop that helps React keep track of which element
+is which in the loop. It can help improve performance.
+
+From within the component, arguments can be accessed with the *this.props*
+object.
+
+```javascript
+class Books extends React.Component {
+  render() {
+    const topicsList = ['HTML', 'JavaScript', 'React'];
+    return(
+      <div className="book">
+        <h3 className="book-title">{this.props.title}</h3>
+        <p className="book-author">by {this.props.author}</p>
+      </div>
+    );
   }
 }
 ```
