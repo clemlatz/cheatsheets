@@ -173,3 +173,52 @@ class Books extends React.Component {
   }
 }
 ```
+
+## State
+
+In React, we don't modify the DOM directly. Instead, we modify a component
+state object in response to user events and let React handle updates to the
+DOM.
+
+The `state` object cannot be modified directly, instead we can use the
+`setState` method. Calling it will only replace the properties passed as an
+argument, not the entire state object.
+
+```javascript
+this.setState({ showBooks: true });
+```
+
+State properties must be initialized with default values in our class contructor.
+
+```javascript
+class Bookshelf extends React.Component {
+  constructor() {
+    super(); // must be called in our constructor
+
+    this.state = {
+      showBooks: false
+    }
+  }
+
+  render() {
+    let buttonText = 'Show books';
+
+    if (this.state.showComments) {
+      buttonText = 'Hide books';
+    }
+
+    return (
+      //...
+      <button onClick={this._handleClick.bind(this)}>{buttonText}</button>
+      //...
+    );
+    //...
+  }
+
+  _handleClick() {
+    this.setState({
+      showBooks: !this.state.showBooks
+    });
+  }
+}
+```
