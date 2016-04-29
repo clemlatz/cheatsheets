@@ -222,3 +222,82 @@ class Bookshelf extends React.Component {
   }
 }
 ```
+
+
+## Refs
+
+**Refs** allow to reference elements like form linputs in a Component from
+anywhere within the class scope.
+
+A `BookForm` component will handle adding new books, and will live inside the
+main `Bookshelf` component.
+
+```javascript
+class BookForm extends React.Component {
+  render() {
+    return (
+      <form onSubmit={this._handleSubmit.bind(this)}>
+        <input placeholder="Title" ref={(input) => this._title = input}>
+        <input placeholder="Author" ref={(input) => this._author = input}>
+        <button>Validation></button>
+      </form>
+    )
+  }
+  _handleSubmit(event) {
+    event.preventDefault();
+
+    let title  = this._title; // refs to inputs from JSX
+    let author = this._author;
+
+    this.props.addBook(title.value, author.value);
+  }
+}
+```
+
+The `addBook` method called in the form component will be defined and passed
+as a prop from within the `Bookshelf` component.
+
+```javascript
+class Bookshelf extends React.Component {
+
+  constructor() {
+    super();
+
+    this.state = {
+      showBooks: false,
+      books: [
+        { id: 1, author: "Thomas Ligotti", title: "Chants du cauchemar et de la nuit" },
+        { id: 2, author: "Lisa Tuttle", title: "Ainsi naissent les fantômes" }
+      ]
+    }
+  }
+
+  render() {
+    return (
+      <div className="bookshelf">
+        <BookForm addBook={this._addBook.bind(this)} />
+      </div>
+    )
+  }
+
+  _getBooks() {
+    return this.state.books.map((book) => {
+      return (
+        <Book title={book.title} author={book.author} key={book.id} />
+      );
+    });
+  }
+
+  _addBook(title, author) {
+    const book = {
+      id: this.state.books.length + 1,
+      title,
+      author
+    }
+    this.setState({ books: this.state.books.concat([book]) });
+  }
+}
+```
+
+The use of concat (instead of push) helps React to stay fast, because it creates
+and references a new array instead of updating the existing one.
