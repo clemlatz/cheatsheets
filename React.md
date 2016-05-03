@@ -301,3 +301,52 @@ class Bookshelf extends React.Component {
 
 The use of concat (instead of push) helps React to stay fast, because it creates
 and references a new array instead of updating the existing one.
+
+
+## Lifecycle methods
+
+Lifecycle methods are called when the Component is rendered for this fist time
+or about to be removed from the DOM.
+
+1. `constructor()`
+2. `componentWillMount()`: called before the component is rendered
+3. `render()`
+4. `componentDidMount()`: called after it is rendered
+5. `componentWillUnmount()`: called before it is removed from the DOM
+
+[Full method list](https://facebook.github.io/react/docs/component-specs.html#lifecycle-methods)
+
+```javascript
+class Bookshelf extends React.Component {
+
+  // When component is rendered for the first time
+  componentWillMount() {
+    _fetchBooks();
+  }
+
+  // After component has been rendered
+  componentDidMount() {
+    this._timer = setInterval(() => this._fetchBooks(), 5000);
+  }
+
+  // When the component is about to be removed from the DOM
+  componentWillUnmount() {
+    clearInterval(this._timer);
+  }
+
+  _fetchBooks() {
+    // Get comments from server through XHR...
+    fetch('/api/comments')
+      .then(function(comments) {
+        this.setState({ comments });        
+      });
+  }
+  //...
+}
+```
+
+Since `_fetchBooks` calls the `setState` method that will trigger the
+`render` method, if will call it from within the `render` method, it will cause
+an infinite loop. The `componentWillMount` method is more appropriate.
+
+The `componentWillMount` can be used to clear memory, in order to avoid leaks.
