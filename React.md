@@ -148,7 +148,7 @@ class Bookshelf extends React.Component {
     return(
     <div className="bookshelf">
       <h3>{this._getBookshelfTitle(books.length)}</h3>
-      {comments} // JSX knows how to render an array
+      {books} // JSX knows how to render an array
     </div> );
   }
 }
@@ -163,7 +163,6 @@ object.
 ```javascript
 class Books extends React.Component {
   render() {
-    const topicsList = ['HTML', 'JavaScript', 'React'];
     return(
       <div className="book">
         <h3 className="book-title">{this.props.title}</h3>
@@ -203,7 +202,7 @@ class Bookshelf extends React.Component {
   render() {
     let buttonText = 'Show books';
 
-    if (this.state.showComments) {
+    if (this.state.showBooks) {
       buttonText = 'Hide books';
     }
 
@@ -226,7 +225,7 @@ class Bookshelf extends React.Component {
 
 ## Refs
 
-**Refs** allow to reference elements like form linputs in a Component from
+**Refs** allow to reference elements like form inputs in a Component from
 anywhere within the class scope.
 
 A `BookForm` component will handle adding new books, and will live inside the
@@ -305,7 +304,7 @@ and references a new array instead of updating the existing one.
 
 ## Lifecycle methods
 
-Lifecycle methods are called when the Component is rendered for this fist time
+Lifecycle methods are called when the Component is rendered for this first time
 or about to be removed from the DOM.
 
 1. `constructor()`
@@ -335,10 +334,10 @@ class Bookshelf extends React.Component {
   }
 
   _fetchBooks() {
-    // Get comments from server through XHR...
-    fetch('/api/comments')
-      .then(function(comments) {
-        this.setState({ comments });        
+    // Get books from server through XHR...
+    fetch('/api/books')
+      .then(function(books) {
+        this.setState({ books });        
       });
   }
   //...
@@ -346,7 +345,7 @@ class Bookshelf extends React.Component {
 ```
 
 Since `_fetchBooks` calls the `setState` method that will trigger the
-`render` method, if will call it from within the `render` method, it will cause
+`render` method, calling it from within the `render` method will cause
 an infinite loop. The `componentWillMount` method is more appropriate.
 
 The `componentWillMount` can be used to clear memory, in order to avoid leaks.
