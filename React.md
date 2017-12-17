@@ -154,6 +154,8 @@ class Bookshelf extends React.Component {
 }
 ```
 
+### Special `key` prop
+
 The `key` prop is a special prop that helps React keep track of which element
 is which in the loop. It can help improve performance.
 
@@ -172,6 +174,21 @@ class Books extends React.Component {
   }
 }
 ```
+
+### Special `children` prop
+
+The `children` prop can be use to access the content of the component element
+when it was called:
+
+```javascript
+function Book(props) {
+  return <div className="book">{props.children}</div>;
+}
+
+ReactDOM.render(
+  <Book>Catcher in the rye</Book>,
+  document.querySelector('book')
+);
 
 ## State
 
