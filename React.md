@@ -48,6 +48,13 @@ ReactDOM.render(
 </html>
 ```
 
+A simple component can also be created from a simple function:
+
+```javascript
+const Book = (props) => {
+  return <Book>{props.title}</Book>;
+}
+```
 
 ## Understanding JSX
 
