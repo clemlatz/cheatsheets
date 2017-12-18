@@ -196,6 +196,7 @@ ReactDOM.render(
   <Book>Catcher in the rye</Book>,
   document.querySelector('book')
 );
+```
 
 ## State
 
