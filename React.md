@@ -247,6 +247,17 @@ class Bookshelf extends React.Component {
 }
 ```
 
+### prevState
+
+Because state updates can happen asynchronously, when the state update is
+based on the previous state (eg. incrementing a counter, negating a boolean),
+it's better to use a callback with a `prevState` argument.
+
+```javascript
+this.setState(prevState => {
+  return { someToggle: !prevState.someToggle }
+});
+```
 
 ## Refs
 
