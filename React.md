@@ -259,6 +259,26 @@ this.setState(prevState => {
 });
 ```
 
+### Updating arrays or objects in state
+
+```javascript
+const books = this.state.books;
+books.splice(0, 1);
+this.setState({ books });
+```
+
+This would work but is considered a bad practice because, as `books` is a
+reference pointing to the same object than `this.state.books`, it would change
+the `state` object directly and thus lead to unpredictable behavior.
+A better way to do it is to clone the original object, ie. using the spread
+operator, and pass the clone to `setState`.
+
+```javascript
+const books = [...this.state.books];
+books.splice(0,1);
+this.setState({ books });
+```
+
 ## Refs
 
 **Refs** allow to reference elements like form inputs in a Component from
