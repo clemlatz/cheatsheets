@@ -453,3 +453,60 @@ class Book extends React.Component {
 
 Webpack will affect hash to the class names. This way, we can be sure our 
 `title` class won't affect any other component than `Book`.
+
+## Handling errors
+
+Since React 16, we can handle errors in our React app using an ErrorBoundary
+component:
+
+```jsx
+// ./ErrorBoundary/ErrorBoundary.js
+import React from 'react';
+
+export default class ErrorBoundary extends React.Component {
+  state = {
+    hasError: false,
+    errorMessage: ''
+  }
+
+  componentDidCatch = (error, info) => {
+    this.setState({
+      hasError: true,
+      errorMessage: error.message
+    });
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div>
+          <h1>Something went terribly wrong!</h1>
+          <p>{this.state.errorMessage}</p>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+The `componentDidCatch` method act as the `catch` instruction and
+will be triggered when an error is thrown in a child component. We
+can now wrap the `ErrorBoundary` around the component from which we
+want to catch errors.
+
+```jsx
+// App.js
+// In a loop, the key props should be associated with the higher
+// component
+<ErrorBoundary key={movie.id}>
+  <Book
+    title={book.title}
+    author={book.director}
+  />
+</ErrorBoundary>
+```
+
+If we `throw` in the `Book` component, the `ErrorBoundary` component
+will be rendered instead of `Book` (in production only).
