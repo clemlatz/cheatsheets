@@ -405,3 +405,51 @@ Since `_fetchBooks` calls the `setState` method that will trigger the
 an infinite loop. The `componentWillMount` method is more appropriate.
 
 The `componentWillMount` can be used to clear memory, in order to avoid leaks.
+
+## Styling React component
+
+To style a React component with scoped stypes, we can use 
+[CSS Modules](https://github.com/css-modules/css-modules).
+
+In a webpack config file:
+
+```javascript
+{
+  loader: require.resolve('css-loader'),
+  options: {
+    importLoaders: 1,
+    modules: true,
+    localIdentName: '[name]__[local]__[hash:base64:5]'
+  },
+},
+```
+
+In a Book component:
+
+```javascript
+// ./Book/Book.js
+import css from './Book.css';
+
+class Book extends React.Component {
+  render() {
+    <div className={css.Book}>
+      <h1 className={css.title}>Book title</h1>
+    </div>
+  }
+}
+```
+
+```css
+/* ./Book/Book.css */
+.Book {
+  margin: auto;
+  width: 500px;
+}
+
+.title {
+  color: red;
+}
+```
+
+Webpack will affect hash to the class names. This way, we can be sure our 
+`title` class won't affect any other component than `Book`.
