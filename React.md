@@ -48,13 +48,17 @@ ReactDOM.render(
 </html>
 ```
 
-A simple component can also be created from a simple function:
+A simple component can also be created from a simple function, also known as
+functional components:
 
 ```javascript
 const Book = (props) => {
   return <Book>{props.title}</Book>;
 }
 ```
+
+It's a best practice to use a functional component whenever our component
+doesn't need to manage a state.
 
 ## Understanding JSX
 
