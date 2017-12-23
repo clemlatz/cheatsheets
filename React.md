@@ -410,6 +410,19 @@ an infinite loop. The `componentWillMount` method is more appropriate.
 
 The `componentWillMount` can be used to clear memory, in order to avoid leaks.
 
+### Creation lifecycle
+
+When a component is created, the follow lifecycle methods are called:
+
+1. `constructor(props)` needs to call `super(props)`. It can set up state
+but it shouldn't cause side-effects (eg. fetch data from the web).
+2. `componentWillMount()` can update state and make last-minute
+optimization, but shouldn't cause side-effects.
+3. `render()` prepares and structures JSX code
+4. React renders child component
+5. `componentDidMount()` can cause side-effects but shouldn't update
+the state.
+
 ## Styling React component
 
 To style a React component with scoped stypes, we can use 
