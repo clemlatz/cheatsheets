@@ -514,3 +514,27 @@ want to catch errors.
 
 If we `throw` in the `Book` component, the `ErrorBoundary` component
 will be rendered instead of `Book` (in production only).
+
+
+## Statefull vs stateless components
+
+As an app grows, it becomes difficult to handle state management. A
+good pratice is split apps into statefull (or container or class-based) 
+components that change the state and stateless (or functional) components 
+that only handles rendering based on passed props.
+
+### Statefull (container) components
+
+* Created with `class Book extends React.Component`
+* Can access and update the state
+* Can have lifecycle hook methods
+* Access props and state via `this.props` and `this.state`
+* Only used when we need to access state or lifecycle methods
+
+### Stateless (functional) components
+
+* Created with `const Book = (props) =>`
+* Cannot access and update the state
+* Cannot have lifecycle hook methods
+* Only access props via `props`
+* Use in every other case
