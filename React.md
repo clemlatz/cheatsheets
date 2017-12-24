@@ -410,9 +410,9 @@ an infinite loop. The `componentWillMount` method is more appropriate.
 
 The `componentWillMount` can be used to clear memory, in order to avoid leaks.
 
-### Creation lifecycle
+### Creation lifecycle methods
 
-When a component is created, the follow lifecycle methods are called:
+When a component is created, the following lifecycle methods are called:
 
 1. `constructor(props)` needs to call `super(props)`. It can set up state
 but it shouldn't cause side-effects (eg. fetch data from the web).
@@ -421,7 +421,27 @@ optimization, but shouldn't cause side-effects.
 3. `render()` prepares and structures JSX code
 4. React renders child component
 5. `componentDidMount()` can cause side-effects but shouldn't update
-the state.
+the state (this would call render again and cause an infinite loop).
+
+### Update lifecycle methods
+
+When a component update is triggered by parents, the following lifecycle 
+methods are called:
+
+1. `componentWillReceiveProps(nextProps)` can sync state to props, but
+shouldn't cause side-effects
+2. `shouldComponentUpdate(nextProps, nextState)` may cancel updating process
+if `false` is returned. It should not cause side-effects.
+3. `componentWillUpdate(nextProps, nextState)` can sync state to props, but
+shouldn't cause side-effects
+4. `render()` prepares and structures JSX code
+5. React update all children components props
+6. `componentDidUpdate()` can cause side-effects but shouldn't update
+the state (this would call render again and cause an infinite loop).
+
+When a component update is triggred by internal change, the 
+`componentWillReceiveProps` will not be called, but all following methods
+will.
 
 ## Styling React component
 
