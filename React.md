@@ -632,3 +632,67 @@ that only handles rendering based on passed props.
 * Cannot have lifecycle hook methods
 * Only access props via `props`
 * Use in every other case
+
+
+## High-order component
+
+High-order components are components that wraps another component to
+add logic or elements that might be shared by multiple components. They
+are often used by third-party librairies.
+
+Create an HOC that add a wrapping `<div>` with a custom class:
+
+```jsx
+// ./hoc/WithClass.js
+import React from 'react'
+
+export default (props) => <div className={props.classes}>{props.children}</div>;
+```
+
+And use it in another component:
+
+```jsx
+// ./App.js
+import WithClass from './hoc/WithClass'
+//...
+render() {
+  return (
+    <WithClass classes="App">
+      <h1>Books</h1>
+      <p>My bookshelf</p>
+    </WithClass>
+  );
+}
+
+```
+An often seen pattern is to create a function that returns a wrapper element:
+
+```jsx
+// ./hoc/withClass.js
+export default (WrappedComponent, className) => {
+  return (props) => (
+    <div className={className}>
+      <WrappedComponent {...props}/>
+    </div>
+  );
+}
+```
+
+That we would use like this:
+
+```jsx
+// ./App.js
+import withClass from './hoc/withClass.js';
+//...
+render() {
+  return (
+    <React.Fragment>
+      <h1>Books</h1>
+      <p>My bookshelf</p>
+    </React.Fragment>
+  );
+}
+//...
+
+export default withClass(App, '.App');
+```
