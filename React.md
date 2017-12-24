@@ -443,6 +443,36 @@ When a component update is triggred by internal change, the
 `componentWillReceiveProps` will not be called, but all following methods
 will.
 
+### PureComponent
+
+We can use the `shouldComponentUpdate` method to decide whether a component
+should be re-rendered based on `nextProps` and `nextState`
+
+```jsx
+shouldComponentUpdate(nextProps, nextState) {
+  if (nextProps.title !== this.props.title) {
+    return true;
+  }
+  
+  return false;
+}
+```
+
+Or we could implement a `PureComponent` that will always implement the
+`shouldComponentUpdate` and check if `props` or `state` have changed.
+
+```jsx
+import React from 'react';
+
+class Book extends React.Component {
+  //...
+}
+```
+
+As these can affect performances, we should only implement theme if
+we know there's a possibilty of `props` on `state` not changing, thus
+not needing React to re-render the component.
+
 ## Styling React component
 
 To style a React component with scoped stypes, we can use 
@@ -488,7 +518,7 @@ class Book extends React.Component {
 }
 ```
 
-Webpack will affect hash to the class names. This way, we can be sure our 
+Webpack will affect hashes to the class names. This way, we can be sure our 
 `title` class won't affect any other component than `Book`.
 
 ## Handling errors
