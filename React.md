@@ -122,6 +122,37 @@ class BookshelfBox extends React.Component {
 }
 ```
 
+### Using React Fragment to render multiple elements
+
+In `render()` we should always return a single element (or an array of elements
+with keys). In we want to return multiple elements, we can wrap them in another
+element:
+
+```jsx
+render() {
+  return (
+    <div>
+      <h1>Books</h1>
+      <p>My bookshelf</p>
+    </div>
+  );
+}
+```
+
+But if we doesn't want to pollute the DOM with unnecessary `<div>`, we can
+return a `React.Fragment` (react 16.2+) component containing our elements.
+
+```jsx
+render() {
+  return (
+    <React.Fragment>
+      <h1>Books</h1>
+      <p>My bookshelf</p>
+    </React.Fragment>
+  );
+}
+```
+
 
 ## Props
 
