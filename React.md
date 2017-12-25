@@ -233,6 +233,41 @@ ReactDOM.render(
 );
 ```
 
+### Validating props with PropTypes
+
+We can validate props and ensure passed props are of the correct types using
+the [PropTypes library](https://github.com/facebook/prop-types).
+
+    npm install --save prop-types
+    
+In the component:
+
+```jsx
+import React from 'react';
+import PropTypes from 'prop-types';
+
+class Book extends React.Component {
+  render() {
+    return (
+      <div className="book">
+        <h1>{this.props.title} ({this.props.year})</h1>
+        <p>by {this.props.author}</p>
+        <button onClick={this.props.onDeleteButtonClick}>delete</button>
+      </div>
+    );
+  }
+}
+
+Book.propTypes = {
+  title: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
+  year: PropTypes.number.isRequired,
+  onDeleteButtonClick: PropTypes.func.isRequired
+};
+
+export default Book;
+```
+
 ## State
 
 In React, we don't modify the DOM directly. Instead, we modify a component
