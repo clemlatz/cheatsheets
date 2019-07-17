@@ -49,6 +49,12 @@ Run a container from an image
 docker run -p 4000:80
 ```
 
+SSH into a running container
+
+```console
+docker exec -ti container-name bash
+```
+
 ## Dockerfile
 
 ```Dockerfile
