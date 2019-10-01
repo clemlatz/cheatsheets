@@ -40,7 +40,13 @@ Build image from Dockerfile
 
 ```console
 docker build -t username/image .
-docker build -t username/image:0.1.0 .
+docker build -t username/image:latest username/image:0.1.0 .
+```
+
+Push an image to Docker hub
+
+```console
+docker push username/image:tag
 ```
 
 Run a container from an image
