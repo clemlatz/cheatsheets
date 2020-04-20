@@ -10,6 +10,11 @@ Using nginx webroot:
 sudo certbot --nginx -d example.com
 ```
 
+Using DNS challenge:
+```
+certbot --manual --preferred-challenges dns certonly -d example.com
+```
+
 [Through CloudFlare CDN](https://bjornjohansen.no/wildcard-certificate-letsencrypt-cloudflare):
 
 ```console
