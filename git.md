@@ -34,6 +34,8 @@ Create a commit (snapshot) of staged files with a message
 * --amend : add the current staging area to last commit
 * --amend --no-edit : do it without changing the commit message
 * --amend -m : change the last commit' message
+* --fixup {hash} : merge into {hash} commit when rebasing with `--autosquash`
+* --fixup :/{message} : merge into commit that starts with {message} when rebasing with `--autosquash`
 
 ### git rm {file}
 Delete {file} and completely remove it from the index
@@ -47,8 +49,9 @@ Show an object (blob, tree, tags and commit)
 
 ### git rebase
 Replay commits
-* master : replay commits from master to current branch
+* {branch} : replay commits from {branch} to current branch
 * -i : interactive mode
+* -i --autosquash : auto fixup commits starting with `!fixup`
 
 ### git revert {hash}
 Undo changes of {hash} commit and create a new commit
