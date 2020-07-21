@@ -3,136 +3,136 @@ git
 
 ##  Basics
 
-### git init
+### `git init`
 Create a new local repository
 
-### git status / st
+### `git status`
 Check local repository status
 
-### git diff
+### `git diff`
 Show changes in the working directory since last commit
-* --staged : changes in the staging aera
+* `--staged`: changes in the staging aera
 
-### git add {path}
-Add {path} file(s) to the staging area  
-* -p {file} : Add only selected fragments of {file}  
+### `git add {path}`
+Add files matching `{path}` to the staging area  
+* `-p {file}`: Add only selected fragments of `{file}`  
 
-### git reset
-Reset the stage to last commit  
-* {file} : remove {file} from the staging area  
-* -p {file} : remove selected fragments of {file} from the stage  
-* --hard : reset the stage and the working area to last commit  
-* --soft HEAD^ : cancel last commit and get commited files back to the staging area  
-* --hard HEAD^ : cancel last commit and changes to commited files  
-* --hard HEAD^^ : last commit and previous one  
+### `git reset`
+Reset stage to last commit  
+* `{file}`: remove `{file}` from the staging area  
+* `-p {file}`: remove selected fragments of `{file}` from the stage  
+* `--hard`: reset the stage and the working area to last commit  
+* `--soft HEAD^`: cancel last commit and get commited files back to the staging area  
+* `--hard HEAD^`: cancel last commit and changes to commited files  
+* `--hard HEAD^^`: last commit and previous one  
 
-### git checkout -- {file}
-Undo changes to {file} since last commit
+### `git checkout -- {file}`
+Undo changes to `{file}` since last commit
 
-### git commit -m "Message"
-Create a commit (snapshot) of staged files with a message
-* --amend : add the current staging area to last commit
-* --amend --no-edit : do it without changing the commit message
-* --amend -m : change the last commit' message
-* --fixup {hash} : merge into {hash} commit when rebasing with `--autosquash`
-* --fixup :/{message} : merge into commit that starts with {message} when rebasing with `--autosquash`
+### `git commit -m "Message"`
+Create a commit of staged files with a message
+* `--amend`: add the current staging area to last commit
+* `--amend --no-edit`: do it without changing the commit message
+* `--amend -m`: change the last commit' message
+* `--fixup {hash}`: merge into `{hash}` commit when rebasing with `--autosquash`
+* `--fixup :/{message}`: merge into commit that starts with `{message}` when rebasing with `--autosquash`
 
-### git rm {file}
-Delete {file} and completely remove it from the index
-* -r : recursively delete a directory
-* --cached : only remove from the index and keep file
+### `git rm {file}`
+Delete `{file}` and completely remove it from the index
+* `-r`: recursively delete a directory
+* `--cached`: only remove from the index and keep file
 
-### git show
+### `git show`
 Show an object (blob, tree, tags and commit)
-* {remote}/{branch}:{file} : Show {file} from {branch} in {remote}
-* HEAD^:{file} : Show {file} snapshot from last commit
+* `{remote}/{branch}:{file}`: Show `{file}` from `{branch}` in {remote}
+* `HEAD^:{file}`: Show `{file}` snapshot from last commit
 
-### git rebase
+### `git rebase`
 Replay commits
-* {branch} : replay commits from {branch} to current branch
-* -i : interactive mode
-* -i --autosquash : auto fixup commits starting with `!fixup`
+* `{branch}`: replay commits from `{branch}` to current branch
+* `-i`: interactive mode
+* `-i --autosquash`: auto fixup commits starting with `!fixup`
 
-### git revert {hash}
-Undo changes of {hash} commit and create a new commit
-* -n : do it without committing again
+### `git revert {hash}`
+Undo changes of `{hash}` commit and create a new commit
+* `-n`: do it without committing again
 
 ## Remote
 
-### git clone {url}
+### `git clone {url}`
 Create a local depot by cloning remote depot {url}
 
-### git remote
+### `git remote`
 Manage remote depositories
-* add {name} {url} : add depot {url} as remote with name {name}
-* rm {name} : delete remote {name}
+* `add {name} {url}`: add depot `{url}` as remote with name {name}
+* `rm {name}`: delete remote {name}
 
-### git pull {remote} {branch}
-Get new commits from distant repository {remote} in {branch} and merge them into the current branch
+### `git pull {remote} {branch}`
+Get new commits from distant repository `{remote}` in `{branch}` and merge them into the current branch
 
-### git fetch {remote} {branch}
-Get new commits from distant repository {remote} in {branch} but do not merge them automatically
+### `git fetch {remote} {branch}`
+Get new commits from distant repository `{remote}` in `{branch}` but do not merge them automatically
 
-### git push {remote} {branch}
-Send local commits from {branch} to distant repository {remote}
-* -u : save {remote} and {branch} as default
+### `git push {remote} {branch}`
+Send local commits from `{branch}` to distant repository `{remote}`
+* `-u`: save `{remote}` and `{branch}` as default
 
 ## Stash
 
-### git stash save -u "{message}"
-Save the working directory in the stash without commiting with {message}
+### `git stash save -u "{message}"`
+Save the working directory in the stash without commiting with `{message}`
 
 ## git stash list
 Show all stashes created
 
-### git stash pop
+### `git stash pop`
 Get back the stashed working directory
 
-### git stash drop
+### `git stash drop`
 Remove the latest stash
 * stash@{x} Remove stash number x
 
 ## Branches
 
-### git branch
+### `git branch`
 Show all existing branches
-* -r : show only distant repository branches
-* {branch} : create branch with name {branch}
+* `-r`: show only distant repository branches
+* `{branch}`: create branch with name {branch}
 
-### git checkout {branch}
+### `git checkout {branch}`
 Go to branch {branch}
-* -b : go to branch and create it if necessary
-* --theirs : when fixing pull conflict, keep remote files
-* --ours : when fixing pull conflict, keep local files
+* `-b`: go to branch and create it if necessary
+* `--theirs`: when fixing pull conflict, keep remote files
+* `--ours`: when fixing pull conflict, keep local files
 
-### git merge {branch}
-Merge {branch} in the current branch
+### `git merge {branch}`
+Merge `{branch}` in the current branch
 
-### git branch -d {branch}
+### `git branch -d {branch}`
 Delete branch {branch}
 
-### git cherry-pick {commit}
-Get {commit} from another branch and replay it on current branch 
+### `git cherry-pick {commit}`
+Get `{commit}` from another branch and replay it on current branch 
 
 ## Tags
 
-### git tag
+### `git tag`
 Show all tags
-* -a {tag} : create a new tag named {tag}
-* -a {tag} {commit} : tag a specific commit
-* -m "{message}" : add a message with the new tag
-* -d {tag} : remove a tag
+* `-a {tag}`: create a new tag named {tag}
+* `-a {tag} {commit}`: tag a specific commit
+* `-m "{message}"`: add a message with the new tag
+* `-d {tag}`: remove a tag
 
 ## Log
 
-### git log / lg
+### `git log / lg`
 Show log
 * `--author=‘{author}’`: filter by author
 * `--grep=‘{message}'`: filter by commit message
 * `-10`: show last 10 commits
 * `origin/master..master`: show commits that will be pushed
-* `-- {file}`: show commits affecting {file}
-* `-S "{string}"`: show commits where modified lines match {string}
+* `-- {file}`: show commits affecting `{file}`
+* `-S "{string}"`: show commits where modified lines matches `{string}`
 * `-p`: display diff for each commit
 
 ### `git blame {file}`
@@ -143,16 +143,38 @@ Show a file with last modifying commit for each line
 
 ## Config
 
-### git config --global
+### `git config`
 Set global variable
-* alias.{alias} {command} : créer un alias {alias} pour la commande {command}
-* user.name {name} : nom de l'utilisateur 
-* user.email {email} : adresse de l'utilisateur
+* `--global`: change global config instead of local (repository) one
+* `alias.{alias} {command}`: create an alias `{alias}` for command `{command}`
+* `user.name {name}`: change commiting user name
+* `user.email {email}`: change commiting user email
 
 ### My config
 
-git config --global user.name "Clement Bourgoin"
-git config --global user.email "cb@nokto.net"
+```config
+# Show all untracked files instead of only directory
+git config --global status.showUntrackedFiles all
+
+# Use color
+git config --global color.ui
+
+# Push to the corresponding branch only
+git config --global push.default simple
+
+# Rebase instead of merging when pull a branch
+git config --global pull.rebase true
+
+# Show line numbers when searching with grep
+git config --global grep.lineNumber true
+
+# Use vim as default editor
+git config --global core.editor "vim"
+
+# Aliases
 git config --global alias.st status
-git config --global alias.co checkout
-git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%an %ar)%Creset'" -10
+git config --global alias.ch checkout
+git config --global alias.cm commit
+git config --global alias.cp cherry-pick
+git config --global alias.lg "log --graph --pretty=tformat:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%an %ar)%Creset' -25"
+```
