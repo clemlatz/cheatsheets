@@ -16,43 +16,51 @@ docker version
 docker info
 ```
 
-Execute Docker image
+Build image from a Dockerfile (+ with tag)
 
 ```console
-docker run hello-world
+docker build -t username/image .
+docker build -t username/image:tag .
 ```
 
-List Docker images
+Tag an image
 
 ```console
+docker tag username/image username/image:tag
+```
+
+List available Docker images
+
+```console
+docker image ls
 docker images
+```
+
+Run a container from an image (+ in detached mode)
+
+```console
+docker run -p 4000:80 username/image
+docker run -d -p 4000:80 username/image
 ```
 
 List Docker containers (running, all, all in quiet mode)
 
 ```console
-docker container ls
-docker container ls --all
-docker container ls -aq
+docker ps
+docker ps -a
+docker ps -aq
 ```
 
-Build image from Dockerfile
+Stop a container
 
 ```console
-docker build -t username/image .
-docker build -t username/image:latest username/image:0.1.0 .
+docker stop {container}
 ```
 
 Push an image to Docker hub
 
 ```console
 docker push username/image:tag
-```
-
-Run a container from an image
-
-```console
-docker run -p 4000:80
 ```
 
 SSH into a running container
