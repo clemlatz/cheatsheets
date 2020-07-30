@@ -153,6 +153,18 @@ render() {
 }
 ```
 
+or using the shorthand `<>`:
+
+```jsx
+render() {
+  return (
+    <>
+      <h1>Books</h1>
+      <p>My bookshelf</p>
+    </>
+  );
+}
+```
 
 ## Props
 
