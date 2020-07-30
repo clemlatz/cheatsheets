@@ -731,3 +731,30 @@ render() {
 
 export default withClass(App, '.App');
 ```
+
+## Hooks
+
+Hooks are special functions that let us "hook" in to React feature, like state,
+in functional components.
+
+### useState
+
+The `useState` hook allows to get and update state. It returns an array 
+containing a getter and a setter for a state property.
+
+```js
+const [value, setValue] = useState(initialValue);
+```
+
+A functional component using the `useState` hooks:
+
+```jsx
+function CounterButton() {
+  const [counter, setCounter] = useState(0);
+  return (
+    <button onClick={() => setCounter(counter + 1)}>
+      {counter}
+    </button>
+  );
+}
+```
