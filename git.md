@@ -141,6 +141,30 @@ Show a file with last modifying commit for each line
 ### better git blame with git log
 * `git lg -S ".article-title" -p file.html`
 
+## Bisect
+
+`git bisect` is useful to find a commit where a bug was introduced.
+
+Example workflow:
+
+```console
+# Start git bisect:
+git bisect start
+# Indicate that current HEAD commit is bad:
+git bisect bad HEAD
+# Indicate that last known good commit was when branch diverged from master:
+git bisect good master
+# From here, git will checkout commits between the good and the bad one:
+# We can run tests, try building, etc. to find out is bug is still present
+# Indicate that current checked out commit is good (no bug):
+git bisect good
+# Indicate that current checked out commit is bad (bug is present):
+git bisect bad
+# git will finally tell us what is the first commit on which the bug appeared
+# We can then end bisecting with:
+git bisect reset
+```
+
 ## Config
 
 ### `git config`
