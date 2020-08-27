@@ -758,7 +758,7 @@ containing a getter and a setter for a state property.
 const [value, setValue] = useState(initialValue);
 ```
 
-A functional component using the `useState` hooks:
+A functional component using the `useState` hook:
 
 ```jsx
 function CounterButton() {
@@ -767,6 +767,40 @@ function CounterButton() {
     <button onClick={() => setCounter(counter + 1)}>
       {counter}
     </button>
+  );
+}
+```
+
+### useRef
+
+The `useRef` hook allow us to directly access an element in the DOM. It returns
+an object that can be associated to a DOM element using it's `ref` attribute,
+and whose `current` property is a pointer to that element. 
+
+```js
+const ref = useRef(null);
+return <div><img src="/image.jpg" ref={ref}></div>
+```
+
+A functional component using the `useRef` hook to change an image on mouse over:
+
+```jsx
+function SwapImage() {
+  const imageRef = useRef(null);
+  const imageNB = '/images/image-nb.jpg';
+  const imageColor = '/images/image-color.jpg';
+
+  return (
+    <img 
+      src={imageNB} 
+      onMouseOver={() => {
+        imageRef.current.src = imageColor;
+      }}
+      onMouseOut={() => {
+        imageRef.current.src = imageNB;
+      }}
+      alt="swappable image!" 
+    />
   );
 }
 ```
