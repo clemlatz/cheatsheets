@@ -804,3 +804,68 @@ function SwapImage() {
   );
 }
 ```
+
+### useEffect
+
+The `useEffect` hooks allows us to us side effects in a React functionnal
+components, and execute functions after the component has been rendered or
+unmounted. 
+As an example, adding and removing DOM listeners is a use case for this hook. 
+
+```jsx
+useEffect(() => {
+  // This is executed when the component renders
+  return () => {
+    // This is executed when the component unmounts
+  }
+}, [dependency]);
+```
+
+The second argument is an array that lists dependencies for the hooks. 
+- If left out, the hook will be executed on first render and at every subsequent 
+  rerender of the component.
+- If empty, the hook will only be executed when the component is first mounted.
+- If the array includes an item, the hook will be executed only if the value of
+  the value has changed since previous execution
+
+```jsx
+const [checkboxValue, setCheckboxValue] = useState(false);
+useEffect(
+  () => console.log('checkboxValue changed!'),
+  [checkboxValue]
+);
+```
+
+A functional component using the `useEffect` hook to change an image if it's
+completely in view:
+
+```jsx
+function ImageToggleOnScroll({ imageInView, imageNotInView }) {
+  const imageRef = useRef(null);
+  const [inView, setInView] = useState(false);
+
+  const isInView = () => {
+    const rect = imageRef.current.getBoundingClientRect();
+    return rect.top >= 0 && rect.bottom <= window.innerHeight;
+  };
+
+  const scrollHandler = () => {
+    setInView(isInView());
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", scrollHandler);
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, []);
+
+  return (
+    <img
+      src={inView ? imageInView : imageNotInView}
+      alt="A random pic"
+      ref={imageRef}
+    />
+  );
+}
+```
