@@ -749,6 +749,15 @@ export default withClass(App, '.App');
 Hooks are special functions that let us "hook" in to React feature, like state,
 in functional components.
 
+### Hooks rules
+
+Those rules can be enforced with `eslint-plugin-react-hooks`.
+
+- Hooks should always be used in a component at top level, so that it is 
+guaranteed they are called in the same order every time.
+- Hooks should always be called from React functions, ie functionnal components
+or another hook
+
 ### useState
 
 The `useState` hook allows to get and update state. It returns an array 
