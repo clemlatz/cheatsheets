@@ -878,3 +878,51 @@ function ImageToggleOnScroll({ imageInView, imageNotInView }) {
   );
 }
 ```
+
+### useContext
+
+The `useContext` allows to access context in a much more simpler way than the
+traditionnal API.
+
+```jsx
+// App.jsx
+// Create context for the entire app
+import React from 'react';
+export const ConfigContext = React.CreateContext();
+
+// This is the value we want to access in any component below this one
+const = config = {
+  showBookCovers: true;
+}
+
+const App = () => {
+  return (
+    {/* Wrap our component in the context provider and assign it a value */}
+    <ConfigContext.Provider value={config}>
+      <div className="App">
+        <Books />
+      </div>
+    </ConfigContext.Prover>
+  );
+};
+```
+
+We can access the context from within another component below `App`:
+
+```jsx
+// Books.jsx
+import React, { useContext } from 'react';
+import { ConfigContext } from './App';
+
+const Book = ({ title, coverImage }) => {
+
+  const config = useContext(ConfigContext);
+
+  return (
+    <div className="Book">
+      {config.showBookCovers ? <img src={coverImage} /> : null}
+      {title}
+    </div>
+  );
+};
+```
