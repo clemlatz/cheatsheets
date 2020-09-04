@@ -902,7 +902,7 @@ const App = () => {
       <div className="App">
         <Books />
       </div>
-    </ConfigContext.Prover>
+    </ConfigContext.Provider>
   );
 };
 ```
@@ -922,6 +922,74 @@ const Book = ({ title, coverImage }) => {
     <div className="Book">
       {config.showBookCovers ? <img src={coverImage} /> : null}
       {title}
+    </div>
+  );
+};
+```
+
+### useReducer
+
+A reducer is a function that takes a previous state as first parameter, an 
+action to update state as a second parameter, and returns a new state.
+
+```js
+(previouState, action) => newState
+```
+
+A `useState` hook can be replaced with a `useReducer` hooks with the same
+functionnality.
+
+```js
+const [value, setValue] = useState(initialValue);
+setValue('new value');
+
+// becomes
+
+const [value, dispatchValue] = useReducer((state, action) => {
+  switch (action.type) {
+    case 'setValue':
+      return action.data;
+    default:
+      return state;
+  }
+  action
+}, initialValue);
+dispatchValue({
+  type: 'setValue',
+  data: 'new value';
+})
+```
+
+A functional components that uses a reducer to update a book list.
+
+```jsx
+import React, { useReducer } from 'react';
+
+const BookList = () => {
+  const [books, dispatchBooks] = useReducer(
+    (state, action) => {
+      switch (action.type) {
+        case 'addBook':
+          return state.push(action.book);
+        case 'deleteBook':
+          const bookIndex = state.findIndex(book => book.id === action.bookId);
+          return state.splice(bookIndex, 1);
+        default:
+          return state;
+      }
+    }, 
+    []
+  );
+
+  function deleteBook(bookId) {
+    dispatchBooks({ action: 'deleteBook', bookId });
+  }
+
+  return (
+    <div className="BookList">
+      {books.map(
+        book => <Book book={book} onClick={() => deleteBook(book.id)} />
+      )}
     </div>
   );
 };
