@@ -994,3 +994,59 @@ const BookList = () => {
   );
 };
 ```
+
+### useCallback & useMemo
+
+The `useCallback` and `useMemo` hooks are used for Memoization (an optimization
+technique used for returning cached results).
+- `useMemo` caches a value
+- `useCallback` caches a function
+
+If we have some calculation done when the component renders (eg. filtering and
+sorting results), we don't want that calculating to be done at every renders,
+but maybe only when some props changes (eg filter criteria or sort order).
+
+
+```jsx
+import React, { useMemo } from 'react';
+
+const BookList = ({ books }) => {
+  const [listFilter, setListFilter] = useState('');
+  const [listOrder, setListOrder] = useState('title');
+
+  const filteredBooks = books.filter(book => book.title.includes(listFilter));
+  const sortedBooks = sortByProperty(filteredBooks, listOrder);
+
+  return sortedBooks.map(book => <Book book={book} />);
+};
+```
+
+In the example above, books will be filtered and sorted at every `BookList` 
+render, even if `books`, `listFilter` and `listOrder` hasn't changed. When
+can use the `useMemo` hook to fix that.
+
+```jsx
+import React, { useMemo } from 'react';
+
+const BookList = ({ books }) => {
+  const [listFilter, setListFilter] = useState('');
+  const [listOrder, setListOrder] = useState('title');
+
+  const sortedBooks = useMemo(
+    () => sortByProperty(
+      books.filter(
+        (book) => book.title.includes(listFilter), 
+        listOrder
+      )
+    ),
+    [books, listFilter, listOrder]
+  );
+
+  return sortedBooks.map(book => <Book book={book} />);
+};
+```
+
+The first argument of `useMemo` is a function that returns the value we want to
+memoize, the second argument is a list of dependencies that, when changed, will
+invalidate the cached value and calculate the result again.
+
