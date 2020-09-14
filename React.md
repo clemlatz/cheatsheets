@@ -995,6 +995,24 @@ const BookList = () => {
 };
 ```
 
+One use-case for `useReducer` is to validate 
+and/or update multiple state values.
+
+```js
+// `state` will contain the current value while
+// `action` will be the first argument passed to the `setEmail` function
+const emailReducer = (state, action) => {
+  const isEmailValid = validateEmail(action);
+  setEmailValid(isEmailValid);
+  return isEmailValid ? action : state;
+}
+const initialValue = '';
+const [email, setEmail] = useReducer(emailReducer, initialValue);
+//...
+setEmail('user@example.org');
+```
+
+
 ### useCallback & useMemo
 
 The `useCallback` and `useMemo` hooks are used for Memoization (an optimization
