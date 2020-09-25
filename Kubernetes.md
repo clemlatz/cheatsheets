@@ -20,6 +20,8 @@ kubectl expose                                   # expose a port for a
                                                    deployment/pod
 kubectl create [resource]                        # create a resource
 kubectl apply [resource]                         # create or modify a resource
+kubectl describe [pod]                           # get info about a pod
+kubectl exec [pod-name] -it sh                   # access a shell inside a pod
 ```
 
 ## Pods
@@ -52,7 +54,7 @@ default. One way to expose a container port is:
 kubectl port-forward [pod-id] 8080:80
 ```
 
-#### Delete a pod
+### Delete a pod
 
 If we simply delete a pod, k8s will recreate it immediatly, because its 
 deployment stil exists, and it's role is to make sure the pod is running.
@@ -65,4 +67,52 @@ If we need to delete a pod for good, we need to find and delete its deployment.
 
 ```console
 kubectl delete deployment [deployment-name]
+```
+
+## Declarative configuration
+
+Instead of creating pods in a imperative way using kubectl commands, we can use
+a YAML file to describe a pod in a declarative way.
+
+### YAML file specs
+
+```yaml
+# nginx.pod.yaml
+apiVersion: v1            # Kuberentes API version
+kind: Pod                 # Type of Kubernetess resource
+metadata:                 # Pod metadata
+  name: my-nginx
+  labels:                 # Labels are used to link ressources together
+    app: nginx
+    rel: stable
+spec:                     # Spec or blueprint for the pod
+  containers:             # Info about the containers that will run in our pod
+  - name: my-nginx
+    image: nginx:alpine
+    ports:
+    - containerPort: 80
+```
+
+### Create a pod using a YAML file
+
+```console
+kubectl create --filename nginx.pod.yaml
+kubectl create -f nginx.pod.yaml --dry-run  # dry run
+kubectl apply -f nginx.pod.yaml             # create or update if already exists
+```
+
+### Edit a pod created with a YAML file's config
+
+Will open a file editor to live edit pod's config.
+
+```console
+kubectl edit -f nginx.pod.yaml
+```
+
+### Delete a pod created with a YAML file
+
+Will effectiverly delete the pod because no deployment is associated.
+
+```console
+kubectl delete -f nginx.pod.yaml
 ```
