@@ -164,3 +164,47 @@ spec:
       periodSeconds: 5
 ```
 
+## Deployments
+
+Deployments and ReplicaSets ensure Pods stay running.
+
+A ReplicaSet's
+- act as a self-healing mechanism
+- ensures the requested number of pods are available
+- provides fault-tolerance
+- can be used to scale pods
+- relies on a Pod template
+- used by deployments
+
+A Deployment
+- manages Pods using ReplicaSet
+- scales ReplicaSets, which in turn scale Pods
+- supports zero-downtime updates by creating and destroying ReplicaSets
+- provides rollback functionnality
+- creates a unique label assigned to the ReplicaSet and generated Pods
+- uses a YAML config file very similar to a ReplicaSet
+
+### Creating a Deployment
+
+```yaml
+apiVersion: v1
+kind: Deployment
+metadata:                         # Deployment metadata
+  name: frontend
+  labels:
+    app: my-nginx
+    tier: frontend
+spec:
+  selector:                       # Select a template to use by matching labels
+    matchLabels:
+      tier: frontend
+  template:                       # Template to used to create pod/containers,
+    metadata:                     # using matching labels as it could be placed
+      labels:                     # in another file
+        tier: front-end
+    spec:                         # Template spec
+      containers:
+      - name: my-nginx
+        image: nginx-alpine
+# …
+```
