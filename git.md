@@ -195,6 +195,9 @@ git config --global grep.lineNumber true
 # Use vim as default editor
 git config --global core.editor "vim"
 
+# Highlight whitespaces in diff
+git config --global diff.wsErrorHighlight all
+
 # Aliases
 git config --global alias.st status
 git config --global alias.ch checkout
