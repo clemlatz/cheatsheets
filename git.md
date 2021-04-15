@@ -186,8 +186,11 @@ git config --global color.ui
 # Push to the corresponding branch only
 git config --global push.default simple
 
-# Rebase instead of merging when pull a branch
+# Rebase instead of merging when pulling a branch
 git config --global pull.rebase true
+
+# Always autosquash on rebase
+git config --global rebase.autosquash true
 
 # Show line numbers when searching with grep
 git config --global grep.lineNumber true
